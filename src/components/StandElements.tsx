@@ -1,4 +1,6 @@
 import { isEmpty, map } from "lodash/fp"
+import { v1 } from "uuid"
+
 import {
   calculateBacks,
   calculateFeet,
@@ -60,7 +62,7 @@ export const StandElements = ({
           )}
           {map(
             ({ element: { h, w }, number }) => (
-              <tr>
+              <tr key={v1()}>
                 <td>{`Plecy ${w} / ${h}`}</td>
                 <td>{number}</td>
               </tr>
