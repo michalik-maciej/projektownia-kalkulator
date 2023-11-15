@@ -1,16 +1,25 @@
 import { ChangeEvent } from "react"
-import { map } from "lodash/fp"
+import { find, map, toInteger, toString } from "lodash/fp"
 
 import "../App.css"
-import { Foot, Leg, Shelf } from "../types"
+import { getShelf } from "../products"
+import {
+  Foot,
+  Leg,
+  Shelf,
+  SetFoot,
+  SetLeg,
+  SetShelf,
+  SetNumber,
+} from "../types"
 
 interface Props {
   footOptions: Foot[]
-  handleSetFoot: (arg: ChangeEvent<HTMLSelectElement>) => void
-  handleSetLeg: (arg: ChangeEvent<HTMLSelectElement>) => void
-  handleSetShelf: (arg: ChangeEvent<HTMLSelectElement>) => void
-  handleSetShelfNumber: (arg: ChangeEvent<HTMLInputElement>) => void
-  handleSetWidth: (arg: ChangeEvent<HTMLSelectElement>) => void
+  setFoot: SetFoot
+  setLeg: SetLeg
+  setShelf: SetShelf
+  setShelfNumber: SetNumber
+  setWidth: SetNumber
   legOptions: Leg[]
   shelf: Shelf
   shelfOptions: Shelf[]
@@ -21,21 +30,57 @@ interface Props {
 
 export const StandInput = ({
   footOptions,
-  handleSetFoot,
-  handleSetLeg,
-  handleSetShelf,
-  handleSetShelfNumber,
-  handleSetWidth,
   legOptions,
+  setFoot,
+  setLeg,
+  setShelf,
+  setShelfNumber,
+  setWidth,
   shelf,
   shelfOptions,
   shelvesPerModule,
   width,
   widthOptions,
 }: Props) => {
+  const handleSetWidth = ({
+    target: { value },
+  }: ChangeEvent<HTMLSelectElement>) => {
+    const newShelves = getShelf(toInteger(value))
+    const newShelf = find(({ d }) => d === shelf?.d, newShelves)
+    setShelf(newShelf || newShelves[0])
+    setWidth(toInteger(value))
+  }
+
+  const handleSetFoot = ({
+    target: { value },
+  }: ChangeEvent<HTMLSelectElement>) => {
+    const newFoot = find(({ w }) => toString(w) === value, footOptions)
+    setFoot(newFoot || footOptions[0])
+  }
+
+  const handleSetLeg = ({
+    target: { value },
+  }: ChangeEvent<HTMLSelectElement>) => {
+    const newLeg = find(({ h }) => toString(h) === value, legOptions)
+    setLeg(newLeg || legOptions[0])
+  }
+
+  const handleSetShelf = ({
+    target: { value },
+  }: ChangeEvent<HTMLSelectElement>) => {
+    const newShelf = find(({ d }) => toString(d) === value, shelfOptions)
+    setShelf(newShelf || shelfOptions[0])
+  }
+
+  const handleSetShelfNumber = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
+    setShelfNumber(toInteger(value))
+  }
+
   return (
     <>
-      <div className="text-xl py-8">Regał {width} mm:</div>
+      <div className="text-xl py-8">Regał {width} cm:</div>
       <div className="flex flex-col gap-6 px-8">
         <label>
           Szerokość:

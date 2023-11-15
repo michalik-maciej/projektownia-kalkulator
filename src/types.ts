@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react"
 interface Price {
   price: number
 }
@@ -26,3 +27,11 @@ export type Shelf = Price & {
 export type Support = Price & {
   d: number
 }
+
+export type SetFoot = Dispatch<SetStateAction<Foot>>
+
+export type SetLeg = Dispatch<SetStateAction<Leg>>
+
+export type SetShelf = Dispatch<SetStateAction<Shelf>>
+
+export type SetNumber = Dispatch<SetStateAction<number>>
