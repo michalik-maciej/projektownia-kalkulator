@@ -1,5 +1,3 @@
-import { filter } from "lodash/fp"
-
 export const shelves = [
   { d: 30, w: 66, price: 29.8 },
   { d: 37, w: 66, price: 43.36 },
@@ -56,39 +54,8 @@ export const feet = [
   { d: 57, price: 58.84 },
 ]
 
-const supports = [
+export const supports = [
   { d: 30, price: 7.5 },
   { d: 37, price: 9.6 },
   { d: 47, price: 11.36 },
 ]
-
-export const getSupport = (depth?: number) =>
-  depth ? filter(({ d }) => d === depth, supports) : supports
-
-export const getFoot = () => feet
-
-export const getBack = ({
-  height,
-  width,
-}: {
-  height?: number
-  width?: number
-}) => {
-  if (height && width) {
-    return filter(({ h, w }) => h === height && w === width, backs)
-  }
-  if (height) {
-    return filter(({ h }) => h === height, backs)
-  }
-
-  if (width) {
-    return filter(({ w }) => w === width, backs)
-  }
-
-  return backs
-}
-
-export const getLeg = () => legs
-
-export const getShelf = (width?: number) =>
-  width ? filter(({ w }) => w === width, shelves) : shelves

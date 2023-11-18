@@ -4,7 +4,9 @@ import { feet, shelves, legs } from "../products"
 
 export const getHeightOptions = () => map("h", legs)
 
-export const getBackOptions = () => ["standard", "euro", "brak"]
+export const variantsBack = ["standard", "euro", "brak"]
+
+export const variantsCollection = ["P", "G", "S"] as const
 
 export const getFootOptions = () => map("d", feet)
 

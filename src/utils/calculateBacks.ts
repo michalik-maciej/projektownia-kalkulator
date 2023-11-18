@@ -1,5 +1,5 @@
 import { orderBy } from "lodash/fp"
-import { getBack } from "../products"
+import { getBacks } from "./getProducts"
 
 interface Params {
   numberOfModules?: number
@@ -12,7 +12,7 @@ export const calculateBacks = ({
   height,
   width,
 }: Params) => {
-  const backs = orderBy(["h"], ["desc"], getBack({ width }))
+  const backs = orderBy(["h"], ["desc"], getBacks({ width }))
 
   let remainder = height
   const order = []

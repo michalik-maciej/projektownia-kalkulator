@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app"
 import ReactDOM from "react-dom/client"
 
 import "./index.css"
-import { FormCollections } from "./components/FormCollections"
+import { FormRoot } from "./components/FormRoot"
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -19,6 +19,6 @@ initializeApp(firebaseConfig)
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
-    <FormCollections />
+    <FormRoot />
   </React.StrictMode>
 )

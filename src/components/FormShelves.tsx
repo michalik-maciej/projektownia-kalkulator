@@ -2,16 +2,33 @@ import { Field, FieldArray } from "formik"
 import { Button } from "@chakra-ui/react"
 
 import { getShelfOptions } from "../utils"
+import { FormShelfType } from "../types"
 
-export const FormShelves = ({ fieldName, stand: { shelves } }: any) => {
+interface Props {
+  fieldName: string
+  initialShelf: FormShelfType
+  shelves: FormShelfType[]
+  width: number
+}
+
+export const FormShelves = ({
+  fieldName,
+  initialShelf,
+  shelves,
+  width,
+}: Props) => {
   return (
     <FieldArray name={fieldName}>
       {({ push: pushShelf, remove: removeShelf }) => (
         <>
-          {shelves.map((shelf: any, shelfIndex: number) => (
+          {shelves.map((_, shelfIndex: number) => (
             <div key={shelfIndex}>
-              <Field name={`${fieldName}.shelfSize`} as="select">
-                {getShelfOptions(80).map((depth) => (
+              <Field
+                as="select"
+                name={`${fieldName}.shelfSize`}
+                defaultValue={getShelfOptions(width)[1]}
+              >
+                {getShelfOptions(width).map((depth) => (
                   <option key={depth} value={depth}>
                     {depth}
                   </option>
@@ -20,6 +37,7 @@ export const FormShelves = ({ fieldName, stand: { shelves } }: any) => {
               <Field
                 name={`${fieldName}.shelfNumber`}
                 type="number"
+                defaultValue={initialShelf.numberOfShelves}
                 min={1}
                 max={10}
               />
@@ -28,7 +46,7 @@ export const FormShelves = ({ fieldName, stand: { shelves } }: any) => {
               </Button>
             </div>
           ))}
-          <Button type="button" onClick={() => pushShelf("")}>
+          <Button type="button" onClick={() => pushShelf(initialShelf)}>
             Dodaj półki
           </Button>
         </>

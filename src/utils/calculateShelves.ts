@@ -1,4 +1,4 @@
-import { getSupport } from "../products"
+import { getSupports } from "./getProducts"
 import { Shelf } from "../types"
 
 interface Params {
@@ -13,7 +13,7 @@ export const calculateShelves = ({
   shelf,
 }: Params) => {
   const numberOfShelves = numberOfModules * shelvesPerModule
-  const support = getSupport(shelf.d)[0]
+  const support = getSupports(shelf.d)[0]
 
   const shelves = {
     number: numberOfShelves,

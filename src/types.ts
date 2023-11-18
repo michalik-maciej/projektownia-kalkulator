@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction } from "react"
+import { variantsBack, variantsCollection } from "./utils"
+
 interface Price {
   price: number
 }
@@ -27,10 +28,23 @@ export type Support = Price & {
   d: number
 }
 
-export type SetFoot = Dispatch<SetStateAction<Foot>>
+export type FormShelfType = {
+  depth: number
+  numberOfShelves: number
+}
 
-export type SetLeg = Dispatch<SetStateAction<Leg>>
+export type FormStandType = {
+  backVariant: (typeof variantsBack)[number]
+  foot: number
+  numberOfStands: number
+  shelves: FormShelfType[]
+  width: number
+}
 
-export type SetShelf = Dispatch<SetStateAction<Shelf>>
-
-export type SetNumber = Dispatch<SetStateAction<number>>
+export type FormCollectionType = {
+  cover?: boolean
+  height: number
+  numberOfCollections?: number
+  variant?: (typeof variantsCollection)[number]
+  stands: FormStandType[]
+}
