@@ -11,16 +11,15 @@ import {
 } from "@chakra-ui/react"
 import { uniq, map } from "lodash/fp"
 import { getShelf, getFoot } from "../products"
-
 import { Formik, Form, FieldArray, Field } from "formik"
 
-export const MainInput = () => {
+export const FormMain = () => {
   const initialValues = {
     stands: [],
   }
 
   const backOptions = ["standard", "euro", "brak"]
-  const footOptions = getFoot()
+  const baseOptions = getFoot()
   const widthOptions = uniq(map(({ w }) => w, getShelf()))
 
   return (
@@ -57,14 +56,7 @@ export const MainInput = () => {
                     <Tbody>
                       {values.stands.length > 0 &&
                         values.stands.map(
-                          (
-                            {
-                              base = footOptions[0].w,
-                              numberOfShelves = 5,
-                              width = widthOptions[0],
-                            },
-                            index
-                          ) => (
+                          ({ base, numberOfShelves, width }, index) => (
                             <Tr key={index}>
                               <Td>
                                 <Box>{`${width} / ${base} / ${numberOfShelves}`}</Box>
@@ -93,32 +85,16 @@ export const MainInput = () => {
                                   name={`stands.${index}.base`}
                                 >
                                   {map(
-                                    ({ w }) => (
-                                      <option key={`base-${w}`} value={w}>
-                                        {w}
+                                    ({ d }) => (
+                                      <option key={`base-${d}`} value={d}>
+                                        {d}
                                       </option>
                                     ),
-                                    footOptions
+                                    baseOptions
                                   )}
                                 </Field>
                               </Td>
-                              <Td>
-                                <Field as="select" value="shelf">
-                                  {map(
-                                    ({ w }) => (
-                                      <option key={`base-${w}`} value={w}>
-                                        {w}
-                                      </option>
-                                    ),
-                                    footOptions
-                                  )}
-                                </Field>
-                                <Field
-                                  value={numberOfShelves}
-                                  name={`stands.${index}.numberOfShelves`}
-                                  type="number"
-                                />
-                              </Td>
+                              <Td></Td>
                               <Td>
                                 <Field
                                   as="select"
@@ -154,7 +130,15 @@ export const MainInput = () => {
                           <Button
                             fontWeight={700}
                             type="button"
-                            onClick={() => push({})}
+                            onClick={() =>
+                              push({
+                                back: backOptions[0],
+                                base: baseOptions[0].d,
+                                numberOfShelves: 5,
+                                shelf: baseOptions[0].d,
+                                width: widthOptions[0],
+                              })
+                            }
                           >
                             + Dodaj
                           </Button>

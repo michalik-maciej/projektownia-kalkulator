@@ -43,7 +43,7 @@ export const StandElements = ({
         </thead>
         <tbody>
           <tr>
-            <td>{`Stopa ${foot?.w}`}</td>
+            <td>{`Stopa ${foot?.d}`}</td>
             <td>{feet.number}</td>
           </tr>
           <tr>

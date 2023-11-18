@@ -10,7 +10,6 @@ export type Back = Price & {
 
 export type Foot = Price & {
   d: number
-  w: number
 }
 
 export type Leg = Price & {
