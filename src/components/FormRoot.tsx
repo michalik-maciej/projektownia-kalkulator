@@ -47,12 +47,12 @@ export const FormRoot = () => {
       {({ values: { collections } }) => (
         <Form>
           <TableContainer
-            p="32"
+            p="8"
             sx={{
               "& Td, Th": {
                 border: "1px solid",
                 textAlign: "center",
-                minW: 100,
+                w: "50px",
               },
             }}
           >
