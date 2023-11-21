@@ -9,7 +9,7 @@ interface Props {
 
 export const PageWrapper = ({ children }: Props) => {
   return (
-    <Box mt="16">
+    <Box pt="20" minH="100vh">
       <HStack
         position="fixed"
         zIndex={1}

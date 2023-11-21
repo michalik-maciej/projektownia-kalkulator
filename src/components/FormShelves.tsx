@@ -18,14 +18,14 @@ export const FormShelves = ({
   width,
 }: Props) => {
   return (
-    <FieldArray name={fieldName}>
+    <FieldArray name={`${fieldName}`}>
       {({ push: pushShelf, remove: removeShelf }) => (
         <>
-          {shelves.map((_, shelfIndex: number) => (
+          {shelves.map((_, shelfIndex) => (
             <div key={shelfIndex}>
               <Field
                 as="select"
-                name={`${fieldName}.shelfSize`}
+                name={`${fieldName}.${shelfIndex}.depth`}
                 defaultValue={getShelfOptions(width)[1]}
               >
                 {getShelfOptions(width).map((depth) => (
@@ -35,19 +35,27 @@ export const FormShelves = ({
                 ))}
               </Field>
               <Field
-                name={`${fieldName}.shelfNumber`}
+                name={`${fieldName}.${shelfIndex}.numberOfShelves`}
                 type="number"
                 defaultValue={initialShelf.numberOfShelves}
                 min={1}
                 max={10}
               />
-              <Button type="button" onClick={() => removeShelf(shelfIndex)}>
-                Usuń półki
+              <Button
+                position="absolute"
+                type="button"
+                onClick={() => removeShelf(shelfIndex)}
+              >
+                - Półki
               </Button>
             </div>
           ))}
-          <Button type="button" onClick={() => pushShelf(initialShelf)}>
-            Dodaj półki
+          <Button
+            position="absolute"
+            type="button"
+            onClick={() => pushShelf(initialShelf)}
+          >
+            + Półki
           </Button>
         </>
       )}

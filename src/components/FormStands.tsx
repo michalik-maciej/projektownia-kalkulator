@@ -1,9 +1,13 @@
-import { Fragment } from "react"
 import { Field, FieldArray } from "formik"
+import { Button, Radio, VStack, Td, Tr } from "@chakra-ui/react"
 
-import { Button, Td, Thead, Tr, Th } from "@chakra-ui/react"
-
-import { getFootOptions, variantsBack, getWidthOptions } from "../utils"
+import {
+  getFootOptions,
+  getWidthOptions,
+  getHeightOptions,
+  variantsCollection,
+  variantsBack,
+} from "../utils"
 import { FormStandType } from "../types"
 
 import { FormShelves } from "./FormShelves"
@@ -16,73 +20,126 @@ interface Params {
 
 export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
   return (
-    <FieldArray name={fieldName}>
-      {({ push: pushStand, remove: removeStand }) => (
-        <>
-          {stands.length > 0 && (
-            <Thead>
-              <Th>Szerokość</Th>
-              <Th>Stopa</Th>
-              <Th>Półki</Th>
-              <Th>Plecy</Th>
-            </Thead>
-          )}
-          {stands.map((stand: FormStandType, standIndex: number) => (
-            <Tr position="relative">
-              <Td>
-                <Field name={`${fieldName}.${standIndex}.width`} as="select">
-                  {getWidthOptions().map((width) => (
-                    <option key={width} value={width}>
-                      {width}
-                    </option>
-                  ))}
-                </Field>
-              </Td>
-              <Td>
-                <Field
-                  name={`${fieldName}.foot`}
-                  as="select"
-                  defaultValue={getFootOptions()[1]}
-                >
-                  {getFootOptions().map((depth) => (
-                    <option key={depth} value={depth}>
-                      {depth}
-                    </option>
-                  ))}
-                </Field>
-              </Td>
-              <Td>
-                <FormShelves
-                  fieldName={`${fieldName}.${standIndex}.shelves`}
-                  initialShelf={initialStand.shelves[0]}
-                  shelves={stands[standIndex].shelves}
-                  width={stand.width}
-                />
-              </Td>
-              <Td>
-                <Field name={`${fieldName}.${standIndex}.back`} as="select">
-                  {variantsBack.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </Field>
-              </Td>
-              <Button
-                position="absolute"
-                // isDisabled={standIndex === 0}
-                type="button"
-                onClick={() => removeStand(standIndex)}
-              >
-                Usuń regały
-              </Button>
-            </Tr>
-          ))}
-          <Button type="button" onClick={() => pushStand(initialStand)}>
-            Dodaj regały
-          </Button>
-        </>
-      )}
+    <FieldArray name={`${fieldName}.stands`}>
+      {({ push: pushStand, remove: removeStand }) => {
+        return (
+          <>
+            {stands.map((stand, standIndex) => (
+              <Tr key={`${fieldName}.${standIndex}`} position="relative">
+                <>
+                  {standIndex === 0 && (
+                    <>
+                      <Td rowSpan={stands.length}>
+                        <VStack>
+                          {variantsCollection.map((variant) => (
+                            <label key={variant}>
+                              {variant}
+                              <Field
+                                as={Radio}
+                                pl="2"
+                                defaultChecked={variant === "P"}
+                                key={variant}
+                                name={`${fieldName}.variant`}
+                                value={variant}
+                                isDisabled={variant !== "P"}
+                              />
+                            </label>
+                          ))}
+                        </VStack>
+                      </Td>
+                      <Td visibility="hidden" rowSpan={stands.length}>
+                        ciąg
+                      </Td>
+                      <Td rowSpan={stands.length}>
+                        <Field name={`${fieldName}.height`} as="select">
+                          {getHeightOptions().map((height) => (
+                            <option key={height} value={height}>
+                              {height}
+                            </option>
+                          ))}
+                        </Field>
+                        <Button
+                          position="absolute"
+                          left="30%"
+                          bottom="0"
+                          type="button"
+                          onClick={() => pushStand(initialStand)}
+                        >
+                          + Regał
+                        </Button>
+                      </Td>
+                    </>
+                  )}
+                  <Td>
+                    <Field
+                      name={`${fieldName}.stands.${standIndex}.width`}
+                      as="select"
+                    >
+                      {getWidthOptions().map((width) => (
+                        <option key={width} value={width}>
+                          {width}
+                        </option>
+                      ))}
+                    </Field>
+                  </Td>
+                  <Td>
+                    <Field
+                      name={`${fieldName}.stands.${standIndex}.standNumber`}
+                      type="number"
+                      defaultValue={initialStand.numberOfStands}
+                      min={1}
+                      max={10}
+                    />
+                  </Td>
+                  <Td>
+                    <Field
+                      name={`${fieldName}.stands.${standIndex}.foot`}
+                      as="select"
+                      defaultValue={getFootOptions()[1]}
+                    >
+                      {getFootOptions().map((depth) => (
+                        <option key={depth} value={depth}>
+                          {depth}
+                        </option>
+                      ))}
+                    </Field>
+                  </Td>
+                  <Td>
+                    <FormShelves
+                      fieldName={`${fieldName}.stands.${standIndex}.shelves`}
+                      initialShelf={initialStand.shelves[0]}
+                      width={stand.width}
+                      shelves={stand.shelves}
+                    />
+                  </Td>
+                  <Td>
+                    <Field
+                      name={`${fieldName}.stands.${standIndex}.back`}
+                      as="select"
+                    >
+                      {variantsBack.map(({ value, name }) => (
+                        <option key={value} value={value}>
+                          {name}
+                        </option>
+                      ))}
+                    </Field>
+                    {standIndex > 0 && (
+                      <Button
+                        position="absolute"
+                        isDisabled={standIndex === 0}
+                        type="button"
+                        onClick={() => removeStand(standIndex)}
+                      >
+                        - Regał
+                      </Button>
+                    )}
+                  </Td>
+                </>
+              </Tr>
+            ))}
+          </>
+        )
+      }}
     </FieldArray>
   )
 }

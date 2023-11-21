@@ -59,10 +59,17 @@ export const FormRoot = () => {
             <Table>
               <Thead>
                 <Tr>
-                  <Th>Ciąg</Th>
-                  <Th>Opis</Th>
-                  <Th>Wysokość</Th>
-                  <Th w={500}>Regał</Th>
+                  <Th rowSpan={2}>Ciąg</Th>
+                  <Th rowSpan={2}>Opis</Th>
+                  <Th rowSpan={2}>Wysokość</Th>
+                  <Th colSpan={5}>Regał</Th>
+                </Tr>
+                <Tr>
+                  <Th>Szerokość</Th>
+                  <Th>Ilość</Th>
+                  <Th>Stopa</Th>
+                  <Th>Półki</Th>
+                  <Th>Plecy</Th>
                 </Tr>
               </Thead>
               <FormCollections
@@ -71,7 +78,9 @@ export const FormRoot = () => {
               />
             </Table>
           </TableContainer>
-          <Button type="submit">Submit</Button>
+          <Button mx="8" mt="20" type="submit">
+            Submit
+          </Button>
         </Form>
       )}
     </Formik>
