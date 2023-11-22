@@ -84,7 +84,7 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                   </Td>
                   <Td>
                     <Field
-                      name={`${fieldName}.stands.${standIndex}.standNumber`}
+                      name={`${fieldName}.stands.${standIndex}.numberOfStands`}
                       type="number"
                       defaultValue={initialStand.numberOfStands}
                       min={1}
