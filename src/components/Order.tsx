@@ -1,71 +1,35 @@
-import { isEmpty, map } from "lodash/fp"
-import { v1 } from "uuid"
+import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
+import { orderLegs } from "../utils"
+import { FormCollectionType } from "../types"
 
-import {
-  calculateBacks,
-  calculateFeet,
-  calculateLegs,
-  calculateShelves,
-} from "../utils"
-import { Foot, Leg, Shelf } from "../types"
-
-interface Params {
-  foot: Foot
-  leg: Leg
-  shelf: Shelf
-  shelvesPerModule: number
+type Props = {
+  collections: FormCollectionType[]
 }
 
-export const Order = ({ foot, leg, shelf, shelvesPerModule }: Params) => {
-  const feet = calculateFeet({ foot })
-  const legs = calculateLegs({ leg })
-  const { shelves, supports } = calculateShelves({
-    shelf,
-    shelvesPerModule,
-  })
-
-  const backs = calculateBacks({ height: leg.h, width: shelf.w })
+export const Order = ({ collections }: Props) => {
+  const legs = orderLegs(collections)
 
   return (
-    <>
-      <div className="text-xl py-8 mt-4">Rozpiska:</div>
-      <table className="table-auto mx-8">
-        <thead>
-          <tr>
-            <th>Element</th>
-            <th>Ilość</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{`Stopa ${foot?.d}`}</td>
-            <td>{feet.number}</td>
-          </tr>
-          <tr>
-            <td>{`Profil ${leg?.h}`}</td>
-            <td>{legs.number}</td>
-          </tr>
-          <tr>
-            <td>{`Półka ${shelf?.w} / ${shelf?.d}`}</td>
-            <td>{shelves.number}</td>
-          </tr>
-          {!isEmpty(supports) && (
-            <tr>
-              <td>{`Wspornik ${shelf?.d}`}</td>
-              <td>{supports.number}</td>
-            </tr>
-          )}
-          {map(
-            ({ element: { h, w }, number }) => (
-              <tr key={v1()}>
-                <td>{`Plecy ${w} / ${h}`}</td>
-                <td>{number}</td>
-              </tr>
-            ),
-            backs.order
-          )}
-        </tbody>
-      </table>
-    </>
+    <Table w="30%" m="8">
+      <Thead>
+        <Tr>
+          <Th>Element</Th>
+          <Th>Ilość</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td colSpan={2} fontWeight={600}>
+            Profile
+          </Td>
+        </Tr>
+        {legs.map(({ description, number }, index) => (
+          <Tr key={index}>
+            <Td>{description}</Td>
+            <Td>{number}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   )
 }
