@@ -37,12 +37,12 @@ export const FormRoot = ({ collections }: Props) => {
               <Th rowSpan={2}>Ciąg</Th>
               <Th rowSpan={2}>Opis</Th>
               <Th rowSpan={2}>Wysokość</Th>
+              <Th rowSpan={2}>Stopa</Th>
               <Th colSpan={5}>Regał</Th>
             </Tr>
             <Tr>
               <Th>Szerokość</Th>
               <Th>Ilość</Th>
-              <Th>Stopa</Th>
               <Th>Półki</Th>
               <Th>Plecy</Th>
             </Tr>

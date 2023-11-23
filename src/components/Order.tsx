@@ -1,5 +1,5 @@
 import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
-import { orderLegs } from "../utils"
+import { orderFeet, orderLegs } from "../utils"
 import { FormCollectionType } from "../types"
 
 type Props = {
@@ -8,6 +8,9 @@ type Props = {
 
 export const Order = ({ collections }: Props) => {
   const legs = orderLegs(collections)
+  const feet = orderFeet(collections)
+
+  console.log({ collections })
 
   return (
     <Table w="30%" m="8">
@@ -24,6 +27,17 @@ export const Order = ({ collections }: Props) => {
           </Td>
         </Tr>
         {legs.map(({ description, number }, index) => (
+          <Tr key={index}>
+            <Td>{description}</Td>
+            <Td>{number}</Td>
+          </Tr>
+        ))}
+        <Tr>
+          <Td colSpan={2} fontWeight={600}>
+            Stopy
+          </Td>
+        </Tr>
+        {feet.map(({ description, number }, index) => (
           <Tr key={index}>
             <Td>{description}</Td>
             <Td>{number}</Td>

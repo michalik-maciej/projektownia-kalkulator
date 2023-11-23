@@ -58,10 +58,23 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                             </option>
                           ))}
                         </Field>
+                      </Td>
+                      <Td rowSpan={stands.length}>
+                        <Field
+                          name={`${fieldName}.foot`}
+                          as="select"
+                          defaultValue={getFootOptions()[1]}
+                        >
+                          {getFootOptions().map((depth) => (
+                            <option key={depth} value={depth}>
+                              {depth}
+                            </option>
+                          ))}
+                        </Field>
                         <Button
                           position="absolute"
-                          left="30%"
-                          bottom="0"
+                          left="40%"
+                          transform="translateY(50%)"
                           type="button"
                           onClick={() => pushStand(initialStand)}
                         >
@@ -90,19 +103,6 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                       min={1}
                       max={10}
                     />
-                  </Td>
-                  <Td>
-                    <Field
-                      name={`${fieldName}.stands.${standIndex}.foot`}
-                      as="select"
-                      defaultValue={getFootOptions()[1]}
-                    >
-                      {getFootOptions().map((depth) => (
-                        <option key={depth} value={depth}>
-                          {depth}
-                        </option>
-                      ))}
-                    </Field>
                   </Td>
                   <Td>
                     <FormShelves

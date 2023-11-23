@@ -1,4 +1,13 @@
-import { groupBy, map, flow, sumBy, flatMap, toString } from "lodash/fp"
+import {
+  groupBy,
+  map,
+  flow,
+  sumBy,
+  flatMap,
+  toString,
+  filter,
+  size,
+} from "lodash/fp"
 import { FormCollectionType } from "../types"
 import { legs } from "../products"
 
@@ -16,9 +25,13 @@ export const orderLegs = (data: FormCollectionType[]): ResultItem[] =>
 
       if (!leg) return null
 
+      const numberOfCollectionsByHeight = size(filter(["height", height], data))
+
       return {
         description: `${leg.h} / ${leg.w} / ${leg.d}`,
-        number: sumBy("numberOfStands", flatMap("stands", group)) + 1,
+        number:
+          sumBy("numberOfStands", flatMap("stands", group)) +
+          numberOfCollectionsByHeight,
       }
     })
   )(data)

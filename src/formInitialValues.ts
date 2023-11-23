@@ -16,7 +16,6 @@ const initialShelves = {
 
 const initialStands = {
   backVariant: variantsBack[0],
-  foot: getFootOptions()[2],
   numberOfStands: 1,
   shelves: [initialShelves],
   width: initialWidth,
@@ -24,6 +23,7 @@ const initialStands = {
 
 const initialCollection: FormCollectionType = {
   height: getHeightOptions()[3],
+  foot: getFootOptions()[2],
   variant: "P",
   stands: [initialStands],
 }
