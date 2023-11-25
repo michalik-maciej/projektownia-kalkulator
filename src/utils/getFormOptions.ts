@@ -15,7 +15,7 @@ export const variantsCollection = ["P", "G"] as const
 
 export const getFootOptions = () => map("d", feet)
 
-export const getShelfOptions = (width: number) =>
+export const getShelfOptions = (width: string) =>
   map(
     "d",
     filter(({ w }) => w === width, shelves)

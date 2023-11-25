@@ -2,7 +2,7 @@ import { filter } from "lodash/fp"
 
 import { supports, feet, backs, shelves, legs } from "../products"
 
-export const getSupports = (depth?: number) =>
+export const getSupports = (depth?: string) =>
   depth ? filter(({ d }) => d === depth, supports) : supports
 
 export const getFeet = () => feet
@@ -11,8 +11,8 @@ export const getBacks = ({
   height,
   width,
 }: {
-  height?: number
-  width?: number
+  height?: string
+  width?: string
 }) => {
   if (height && width) {
     return filter(({ h, w }) => h === height && w === width, backs)
@@ -30,5 +30,5 @@ export const getBacks = ({
 
 export const getLegs = () => legs
 
-export const getShelves = (width?: number) =>
+export const getShelves = (width?: string) =>
   width ? filter(({ w }) => w === width, shelves) : shelves

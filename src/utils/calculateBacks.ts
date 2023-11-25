@@ -1,10 +1,10 @@
-import { orderBy } from "lodash/fp"
+import { orderBy, toNumber } from "lodash/fp"
 import { getBacks } from "./getProducts"
 
 interface Params {
   numberOfModules?: number
-  height: number
-  width: number
+  height: string
+  width: string
 }
 
 export const calculateBacks = ({
@@ -12,19 +12,16 @@ export const calculateBacks = ({
   height,
   width,
 }: Params) => {
-  const backs = orderBy(["h"], ["desc"], getBacks({ width }))
-
-  let remainder = height
-  const order = []
-  const BACK_OFFSET = 10
-
-  for (const back of backs) {
-    if (remainder >= back.h + BACK_OFFSET) {
-      const number = Math.floor(remainder / back.h)
-      order.push({ element: back, number })
-      remainder = remainder % back.h
-    }
-  }
-
-  return { order }
+  // const backs = orderBy(["h"], ["desc"], getBacks({ width }))
+  // let remainder = height
+  // const order = []
+  // const BACK_OFFSET = 10
+  // for (const back of backs) {
+  //   if (remainder >= toNumber(back.h) + BACK_OFFSET) {
+  //     const number = Math.floor(remainder / toNumber(back.h))
+  //     order.push({ element: back, number })
+  //     remainder = remainder % toNumber(back.h)
+  //   }
+  // }
+  // return { order }
 }
