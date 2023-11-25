@@ -1,5 +1,6 @@
 import { Field, FieldArray } from "formik"
-import { Button } from "@chakra-ui/react"
+import { Flex, VStack, IconButton } from "@chakra-ui/react"
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 
 import { getShelfOptions } from "../utils"
 import { FormShelfType } from "../types"
@@ -8,7 +9,7 @@ interface Props {
   fieldName: string
   initialShelf: FormShelfType
   shelves: FormShelfType[]
-  width: number
+  width: string
 }
 
 export const FormShelves = ({
@@ -21,42 +22,50 @@ export const FormShelves = ({
     <FieldArray name={`${fieldName}`}>
       {({ push: pushShelf, remove: removeShelf }) => (
         <>
-          {shelves.map((_, shelfIndex) => (
-            <div key={shelfIndex}>
-              <Field
-                as="select"
-                name={`${fieldName}.${shelfIndex}.depth`}
-                defaultValue={getShelfOptions(width)[1]}
-              >
-                {getShelfOptions(width).map((depth) => (
-                  <option key={depth} value={depth}>
-                    {depth}
-                  </option>
-                ))}
-              </Field>
-              <Field
-                name={`${fieldName}.${shelfIndex}.numberOfShelves`}
-                type="number"
-                defaultValue={initialShelf.numberOfShelves}
-                min={1}
-                max={10}
-              />
-              <Button
-                position="absolute"
-                type="button"
-                onClick={() => removeShelf(shelfIndex)}
-              >
-                - Półki
-              </Button>
-            </div>
-          ))}
-          <Button
-            position="absolute"
-            type="button"
-            onClick={() => pushShelf(initialShelf)}
-          >
-            + Półki
-          </Button>
+          <VStack spacing="4">
+            {shelves.map((_, shelfIndex) => (
+              <Flex key={shelfIndex} position="relative">
+                <Field as="select" name={`${fieldName}.${shelfIndex}.depth`}>
+                  {getShelfOptions(width).map((depth) => (
+                    <option key={depth} value={`${width} / ${depth}`}>
+                      {depth}
+                    </option>
+                  ))}
+                </Field>
+                <Field
+                  name={`${fieldName}.${shelfIndex}.numberOfShelves`}
+                  type="number"
+                  min={1}
+                  max={10}
+                />
+                <VStack
+                  position="absolute"
+                  spacing="1"
+                  top="50%"
+                  right="0"
+                  transform="translate(100%, -50%)"
+                >
+                  <IconButton
+                    icon={<DeleteIcon />}
+                    borderRadius="full"
+                    size="xs"
+                    p="0"
+                    aria-label="remove stand"
+                    onClick={() => removeShelf(shelfIndex)}
+                  />
+                </VStack>
+              </Flex>
+            ))}
+            <IconButton
+              icon={<AddIcon />}
+              borderRadius="full"
+              size="xs"
+              p="0"
+              aria-label="add stand"
+              type="button"
+              onClick={() => pushShelf(initialShelf)}
+            />
+          </VStack>
         </>
       )}
     </FieldArray>

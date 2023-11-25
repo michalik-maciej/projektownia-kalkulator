@@ -7,7 +7,9 @@ import {
   Tr,
   Th,
   Tbody,
+  IconButton,
 } from "@chakra-ui/react"
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { FieldArray } from "formik"
 
 import { FormStands } from "./FormStands"
@@ -20,35 +22,36 @@ type Props = {
 }
 export const FormRoot = ({ collections }: Props) => {
   return (
-    <>
-      <TableContainer
-        p="8"
-        sx={{
-          "& Td, Th": {
-            border: "1px solid",
-            textAlign: "center",
-            w: "50px",
-          },
-        }}
-      >
-        <Table>
-          <Thead>
-            <Tr>
-              <Th rowSpan={2}>Ciąg</Th>
-              <Th rowSpan={2}>Opis</Th>
-              <Th rowSpan={2}>Wysokość</Th>
-              <Th rowSpan={2}>Stopa</Th>
-              <Th colSpan={5}>Regał</Th>
-            </Tr>
-            <Tr>
-              <Th>Szerokość</Th>
-              <Th>Ilość</Th>
-              <Th>Półki</Th>
-              <Th>Plecy</Th>
-            </Tr>
-          </Thead>
-          <FieldArray name="collections">
-            {({ push: pushCollection, remove: removeCollection }) => (
+    <FieldArray name="collections">
+      {({ push: pushCollection, remove: removeCollection }) => (
+        <>
+          <TableContainer
+            position="relative"
+            p="16"
+            sx={{
+              "& Td, Th": {
+                border: "1px solid",
+                textAlign: "center",
+                w: "50px",
+              },
+            }}
+          >
+            <Table>
+              <Thead>
+                <Tr>
+                  <Th rowSpan={2}>Ciąg</Th>
+                  <Th rowSpan={2}>Opis</Th>
+                  <Th rowSpan={2}>Wysokość</Th>
+                  <Th rowSpan={2}>Stopa</Th>
+                  <Th colSpan={5}>Regał</Th>
+                </Tr>
+                <Tr>
+                  <Th>Szerokość</Th>
+                  <Th>Ilość</Th>
+                  <Th>Półki</Th>
+                  <Th>Plecy</Th>
+                </Tr>
+              </Thead>
               <>
                 <Tbody>
                   {collections.map(({ stands }, collectionIndex) => (
@@ -57,34 +60,41 @@ export const FormRoot = ({ collections }: Props) => {
                         fieldName={`collections.${collectionIndex}`}
                         stands={stands}
                         initialStand={initialValues.collections[0].stands[0]}
-                      />
-                      <Button
-                        position="absolute"
-                        transform="translate(-100%, -150%)"
-                        type="button"
-                        onClick={() => removeCollection(collectionIndex)}
                       >
-                        - Ciąg
-                      </Button>
+                        <IconButton
+                          icon={<DeleteIcon />}
+                          borderRadius="full"
+                          position="absolute"
+                          size="xs"
+                          p="0"
+                          aria-label="remove collection"
+                          bottom="0"
+                          right="0"
+                          onClick={() => removeCollection(collectionIndex)}
+                        />
+                      </FormStands>
                     </Fragment>
                   ))}
                 </Tbody>
-                <Button
-                  type="button"
-                  position="absolute"
-                  transform="translate(-100%, 50%)"
-                  onClick={() => pushCollection(initialValues.collections[0])}
-                >
-                  + Ciąg
-                </Button>
               </>
-            )}
-          </FieldArray>
-        </Table>
-      </TableContainer>
-      <Button mx="8" mt="20" type="submit">
-        Submit
-      </Button>
-    </>
+            </Table>
+            <IconButton
+              icon={<AddIcon />}
+              borderRadius="full"
+              position="absolute"
+              size="sm"
+              aria-label="remove collection"
+              bottom="0"
+              left="50%"
+              transform="translate(-50%, -50%)"
+              onClick={() => pushCollection(initialValues.collections[0])}
+            />
+          </TableContainer>
+          <Button mx="8" mt="20" type="submit">
+            Submit
+          </Button>
+        </>
+      )}
+    </FieldArray>
   )
 }

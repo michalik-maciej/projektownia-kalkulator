@@ -1,5 +1,7 @@
 import { Field, FieldArray } from "formik"
-import { Button, Radio, VStack, Td, Tr } from "@chakra-ui/react"
+import { Radio, VStack, Td, Tr, IconButton } from "@chakra-ui/react"
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
+import { size } from "lodash/fp"
 
 import {
   getFootOptions,
@@ -11,14 +13,21 @@ import {
 import { FormStandType } from "../types"
 
 import { FormShelves } from "./FormShelves"
+import { ReactNode } from "react"
 
 interface Params {
+  children: ReactNode
   stands: FormStandType[]
   fieldName: string
   initialStand: FormStandType
 }
 
-export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
+export const FormStands = ({
+  children,
+  stands,
+  fieldName,
+  initialStand,
+}: Params) => {
   return (
     <FieldArray name={`${fieldName}.stands`}>
       {({ push: pushStand, remove: removeStand }) => {
@@ -29,7 +38,8 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                 <>
                   {standIndex === 0 && (
                     <>
-                      <Td rowSpan={stands.length}>
+                      <Td position="relative" rowSpan={stands.length}>
+                        {children}
                         <VStack>
                           {variantsCollection.map((variant) => (
                             <label key={variant}>
@@ -60,26 +70,13 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                         </Field>
                       </Td>
                       <Td rowSpan={stands.length}>
-                        <Field
-                          name={`${fieldName}.foot`}
-                          as="select"
-                          defaultValue={getFootOptions()[1]}
-                        >
+                        <Field name={`${fieldName}.foot`} as="select">
                           {getFootOptions().map((depth) => (
                             <option key={depth} value={depth}>
                               {depth}
                             </option>
                           ))}
                         </Field>
-                        <Button
-                          position="absolute"
-                          left="40%"
-                          transform="translateY(50%)"
-                          type="button"
-                          onClick={() => pushStand(initialStand)}
-                        >
-                          + Regał
-                        </Button>
                       </Td>
                     </>
                   )}
@@ -99,7 +96,6 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                     <Field
                       name={`${fieldName}.stands.${standIndex}.numberOfStands`}
                       type="number"
-                      defaultValue={initialStand.numberOfStands}
                       min={1}
                       max={10}
                     />
@@ -112,7 +108,7 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                       shelves={stand.shelves}
                     />
                   </Td>
-                  <Td>
+                  <Td position="relative">
                     <Field
                       name={`${fieldName}.stands.${standIndex}.back`}
                       as="select"
@@ -123,16 +119,35 @@ export const FormStands = ({ stands, fieldName, initialStand }: Params) => {
                         </option>
                       ))}
                     </Field>
-                    {standIndex > 0 && (
-                      <Button
-                        position="absolute"
-                        isDisabled={standIndex === 0}
-                        type="button"
-                        onClick={() => removeStand(standIndex)}
-                      >
-                        - Regał
-                      </Button>
-                    )}
+                    <VStack
+                      position="absolute"
+                      spacing="1"
+                      top="50%"
+                      right="-4px"
+                      transform="translate(100%, -50%)"
+                    >
+                      {size(stands) > 1 && (
+                        <IconButton
+                          icon={<DeleteIcon />}
+                          borderRadius="full"
+                          size="xs"
+                          p="0"
+                          aria-label="remove stand"
+                          onClick={() => removeStand(standIndex)}
+                        />
+                      )}
+                      {size(stands) === standIndex + 1 && (
+                        <IconButton
+                          icon={<AddIcon />}
+                          borderRadius="full"
+                          size="xs"
+                          p="0"
+                          aria-label="add stand"
+                          type="button"
+                          onClick={() => pushStand(initialStand)}
+                        />
+                      )}
+                    </VStack>
                   </Td>
                 </>
               </Tr>
