@@ -23,7 +23,7 @@ const initialStands = {
 
 const initialCollection: FormCollectionType = {
   height: getHeightOptions()[3],
-  foot: getFootOptions()[2],
+  depth: getFootOptions()[2],
   variant: "P",
   stands: [initialStands],
 }

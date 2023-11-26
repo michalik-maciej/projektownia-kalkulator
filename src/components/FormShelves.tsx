@@ -27,7 +27,7 @@ export const FormShelves = ({
               <Flex key={shelfIndex} position="relative">
                 <Field as="select" name={`${fieldName}.${shelfIndex}.depth`}>
                   {getShelfOptions(width).map((depth) => (
-                    <option key={depth} value={`${width} / ${depth}`}>
+                    <option key={depth} value={depth}>
                       {depth}
                     </option>
                   ))}

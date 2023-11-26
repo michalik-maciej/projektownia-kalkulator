@@ -1,73 +1,79 @@
-import { flow, head, groupBy, map, flatMap, sumBy } from "lodash/fp"
+import { groupBy, map, flatMap, sumBy } from "lodash/fp"
 
-import { FormCollectionType, FormStandType, FormShelfType } from "../types"
-
-type OutputItem = {
-  description: string
-  number: number
-}
-
-export const orderBaseShelves = (data: FormCollectionType[]) =>
-  flow(
-    flatMap((item: FormCollectionType) =>
-      item.stands.map((stand) => ({
-        foot: item.foot,
-        width: stand.width,
-        numberOfStands: stand.numberOfStands,
-      }))
-    ),
-    groupBy(({ foot, width }) => `${width} / ${foot}`),
-    map((group) => {
-      const { foot, width } = head(group) || { foot: "", width: "" }
-      return {
-        description: `${width} / ${foot}`,
-        number: sumBy("numberOfStands", group),
-      }
-    })
-  )(data) as unknown as { description: string; number: number }[]
+import { FormCollectionType, FormStandType } from "../types"
 
 export const orderShelves = (data: FormCollectionType[]) => {
-  const stands = data[0].stands
-
-  const flatStand = flatMap(flattenStand, stands)
-
-  function flattenStand({ shelves, numberOfStands, width }: FormStandType) {
-    function mapShelf({ depth, numberOfShelves }: FormShelfType) {
-      return {
+  const aggregateByShelves = ({
+    depth,
+    shelves,
+    numberOfStands,
+    width,
+  }: FormStandType & { depth: string }) => {
+    const joinShelves = () => [
+      {
         depth,
-        numberOfShelves,
-        foot: data[0].foot,
-        width,
-        numberOfStands,
-      }
-    }
+        numberOfShelves: numberOfStands,
+      },
+      ...map(
+        (shelf) => ({
+          ...shelf,
+          numberOfShelves: numberOfStands * shelf.numberOfShelves,
+        }),
+        shelves
+      ),
+    ]
 
-    return shelves.map(mapShelf)
+    const groupShelves = () => groupBy("depth", joinShelves())
+
+    const sumShelves = () =>
+      map(
+        (group) => ({
+          description: `${width} / ${group[0].depth}`,
+          number: sumBy("numberOfShelves", group),
+        }),
+        groupShelves()
+      )
+
+    return sumShelves()
   }
 
-  console.log(stands, flatStand)
+  const aggregateByStands = ({ stands, depth }: FormCollectionType) => {
+    const groupStands = () =>
+      groupBy(
+        "description",
+        flatMap((stand) => aggregateByShelves({ depth, ...stand }), stands)
+      )
 
-  const flat = flatMap(flattenCollection, data)
+    const sumStands = () =>
+      map(
+        (group) => ({
+          description: group[0].description,
+          number: sumBy("number", group),
+        }),
+        groupStands()
+      )
 
-  const groups = groupBy(({ foot, width }) => `${width} / ${foot}`, flat)
-
-  const maps = map((group) => {
-    const { foot, width } = group[0]
-    return {
-      description: `${width} / ${foot}`,
-      number: sumBy("numberOfStands", group),
-    }
-  }, groups)
-
-  // console.log(data, flat)
-
-  function flattenCollection(collection: FormCollectionType) {
-    function mapStand({ width, shelves, numberOfStands }: FormStandType) {
-      return { width, numberOfStands, shelves, foot: collection.foot }
-    }
-
-    return collection.stands.map(mapStand)
+    return sumStands()
   }
 
-  return null
+  const aggregateByCollections = () => {
+    const groupCollections = () =>
+      groupBy(
+        "description",
+        flatMap((collection) => aggregateByStands(collection), data)
+      )
+
+    const sumCollections = () =>
+      map(
+        (group) => ({
+          description: group[0].description,
+          number: sumBy("number", group),
+        }),
+        groupCollections()
+      )
+
+    return sumCollections()
+  }
+
+  return aggregateByCollections()
 }

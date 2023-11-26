@@ -70,7 +70,7 @@ export const FormStands = ({
                         </Field>
                       </Td>
                       <Td rowSpan={stands.length}>
-                        <Field name={`${fieldName}.foot`} as="select">
+                        <Field name={`${fieldName}.depth`} as="select">
                           {getFootOptions().map((depth) => (
                             <option key={depth} value={depth}>
                               {depth}

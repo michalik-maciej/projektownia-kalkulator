@@ -29,13 +29,12 @@ export type Support = Price & {
 }
 
 export type FormShelfType = {
-  size: string
+  depth: string
   numberOfShelves: number
 }
 
 export type FormStandType = {
   backVariant: (typeof variantsBack)[number]
-  baseShelf: string
   numberOfStands: number
   shelves: FormShelfType[]
   width: string
@@ -44,7 +43,7 @@ export type FormStandType = {
 export type FormCollectionType = {
   cover?: boolean
   height: string
-  foot: string
+  depth: string
   numberOfCollections?: number
   variant?: (typeof variantsCollection)[number]
   stands: FormStandType[]
