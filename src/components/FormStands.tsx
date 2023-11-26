@@ -57,7 +57,7 @@ export const FormStands = ({
                           ))}
                         </VStack>
                       </Td>
-                      <Td visibility="hidden" rowSpan={stands.length}>
+                      <Td display="none" rowSpan={stands.length}>
                         ciąg
                       </Td>
                       <Td rowSpan={stands.length}>

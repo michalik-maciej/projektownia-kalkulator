@@ -35,7 +35,7 @@ export const Order = ({ collections }: Props) => {
             <Td>{number}</Td>
           </Tr>
         ))}
-        {/* <Tr>
+        <Tr>
           <Td colSpan={2} fontWeight={600}>
             Stopy
           </Td>
@@ -45,7 +45,17 @@ export const Order = ({ collections }: Props) => {
             <Td>{description}</Td>
             <Td>{number}</Td>
           </Tr>
-        ))} */}
+        ))}
+        <Tr>
+          <Td colSpan={2} fontWeight={600}>
+            Plecy
+          </Td>
+        </Tr>
+        <Tr>
+          <Td colSpan={2} fontWeight={600}>
+            Wsporniki
+          </Td>
+        </Tr>
         <Tr>
           <Td colSpan={2} fontWeight={600}>
             Półki

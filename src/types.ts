@@ -48,3 +48,8 @@ export type FormCollectionType = {
   variant?: (typeof variantsCollection)[number]
   stands: FormStandType[]
 }
+
+export type OrderType = {
+  description: string
+  number: number
+}[]

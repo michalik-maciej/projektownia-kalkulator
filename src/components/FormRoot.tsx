@@ -40,7 +40,9 @@ export const FormRoot = ({ collections }: Props) => {
               <Thead>
                 <Tr>
                   <Th rowSpan={2}>Ciąg</Th>
-                  <Th rowSpan={2}>Opis</Th>
+                  <Th display="none" rowSpan={2}>
+                    Opis
+                  </Th>
                   <Th rowSpan={2}>Wysokość</Th>
                   <Th rowSpan={2}>Stopa</Th>
                   <Th colSpan={5}>Regał</Th>

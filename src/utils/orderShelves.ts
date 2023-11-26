@@ -1,8 +1,8 @@
 import { groupBy, map, flatMap, sumBy } from "lodash/fp"
 
-import { FormCollectionType, FormStandType } from "../types"
+import { FormCollectionType, FormStandType, OrderType } from "../types"
 
-export const orderShelves = (data: FormCollectionType[]) => {
+export const orderShelves = (data: FormCollectionType[]): OrderType => {
   const aggregateByShelves = ({
     depth,
     shelves,
@@ -37,11 +37,14 @@ export const orderShelves = (data: FormCollectionType[]) => {
     return sumShelves()
   }
 
-  const aggregateByStands = ({ stands, depth }: FormCollectionType) => {
+  const aggregateByStands = (collection: FormCollectionType) => {
     const groupStands = () =>
       groupBy(
         "description",
-        flatMap((stand) => aggregateByShelves({ depth, ...stand }), stands)
+        flatMap(
+          (stand) => aggregateByShelves({ depth: collection.depth, ...stand }),
+          collection.stands
+        )
       )
 
     const sumStands = () =>
