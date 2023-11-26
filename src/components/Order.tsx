@@ -1,7 +1,7 @@
 import { size } from "lodash/fp"
 import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
 
-import { orderFeet, orderLegs, orderShelves } from "../utils"
+import { orderFeet, orderLegs, orderShelves, orderSupports } from "../utils"
 import { FormCollectionType } from "../types"
 
 type Props = {
@@ -14,6 +14,7 @@ export const Order = ({ collections }: Props) => {
   const legs = orderLegs(collections)
   const feet = orderFeet(collections)
   const shelves = orderShelves(collections)
+  const supports = orderSupports(collections)
 
   return (
     <Table w="30%" m="8">
@@ -56,6 +57,12 @@ export const Order = ({ collections }: Props) => {
             Wsporniki
           </Td>
         </Tr>
+        {supports.map(({ description, number }, index) => (
+          <Tr key={index}>
+            <Td>{description}</Td>
+            <Td>{number}</Td>
+          </Tr>
+        ))}
         <Tr>
           <Td colSpan={2} fontWeight={600}>
             Półki

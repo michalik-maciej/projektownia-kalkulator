@@ -114,7 +114,11 @@ export const FormStands = ({
                       as="select"
                     >
                       {variantsBack.map(({ value, name }) => (
-                        <option key={value} value={value}>
+                        <option
+                          key={value}
+                          value={value}
+                          disabled={value === "euro"}
+                        >
                           {name}
                         </option>
                       ))}
