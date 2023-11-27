@@ -1,4 +1,4 @@
-import { variantsBack, variantsCollection } from "./utils"
+import { variantsCollection } from "./utils"
 
 interface Price {
   price: number
@@ -34,7 +34,7 @@ export type FormShelfType = {
 }
 
 export type FormStandType = {
-  backVariant: (typeof variantsBack)[number]
+  backVariant: string
   numberOfStands: number
   shelves: FormShelfType[]
   width: string
@@ -45,7 +45,7 @@ export type FormCollectionType = {
   height: string
   depth: string
   numberOfCollections?: number
-  variant?: (typeof variantsCollection)[number]
+  variant: (typeof variantsCollection)[number]
   stands: FormStandType[]
 }
 

@@ -1,23 +1,51 @@
 import { size } from "lodash/fp"
 import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
 
-import { orderFeet, orderLegs, orderShelves, orderSupports } from "../utils"
+import {
+  orderBacks,
+  orderFeet,
+  orderLegs,
+  orderShelves,
+  orderSupports,
+} from "../utils"
 import { FormCollectionType } from "../types"
 
 type Props = {
   collections: FormCollectionType[]
 }
 
+type SectionProps = {
+  name: string
+  order: { description: string; number: number }[]
+}
+
 export const Order = ({ collections }: Props) => {
   if (!size(collections)) return <div>Brak ciągów</div>
 
-  const legs = orderLegs(collections)
-  const feet = orderFeet(collections)
-  const shelves = orderShelves(collections)
-  const supports = orderSupports(collections)
+  const legs = { name: "Profile", order: orderLegs(collections) }
+  const feet = { name: "Stopy", order: orderFeet(collections) }
+  const shelves = { name: "Półki", order: orderShelves(collections) }
+  const supports = { name: "Wsporniki", order: orderSupports(collections) }
+  const backs = { name: "Plecy", order: orderBacks(collections) }
+
+  const renderSection = ({ name, order }: SectionProps) => (
+    <>
+      <Tr>
+        <Td colSpan={2} fontWeight={600}>
+          {name}
+        </Td>
+      </Tr>
+      {order.map(({ description, number }, index) => (
+        <Tr key={index}>
+          <Td>{description}</Td>
+          <Td>{number}</Td>
+        </Tr>
+      ))}
+    </>
+  )
 
   return (
-    <Table w="30%" m="8">
+    <Table w="360px" m="8">
       <Thead>
         <Tr>
           <Th>Element</Th>
@@ -25,55 +53,9 @@ export const Order = ({ collections }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        <Tr>
-          <Td colSpan={2} fontWeight={600}>
-            Profile
-          </Td>
-        </Tr>
-        {legs.map(({ description, number }, index) => (
-          <Tr key={index}>
-            <Td>{description}</Td>
-            <Td>{number}</Td>
-          </Tr>
-        ))}
-        <Tr>
-          <Td colSpan={2} fontWeight={600}>
-            Stopy
-          </Td>
-        </Tr>
-        {feet.map(({ description, number }, index) => (
-          <Tr key={index}>
-            <Td>{description}</Td>
-            <Td>{number}</Td>
-          </Tr>
-        ))}
-        <Tr>
-          <Td colSpan={2} fontWeight={600}>
-            Plecy
-          </Td>
-        </Tr>
-        <Tr>
-          <Td colSpan={2} fontWeight={600}>
-            Wsporniki
-          </Td>
-        </Tr>
-        {supports.map(({ description, number }, index) => (
-          <Tr key={index}>
-            <Td>{description}</Td>
-            <Td>{number}</Td>
-          </Tr>
-        ))}
-        <Tr>
-          <Td colSpan={2} fontWeight={600}>
-            Półki
-          </Td>
-        </Tr>
-        {shelves.map(({ description, number }, index) => (
-          <Tr key={index}>
-            <Td>{description}</Td>
-            <Td>{number}</Td>
-          </Tr>
-        ))}
+        {[legs, feet, shelves, supports, backs].map((category) =>
+          size(category.order) ? renderSection(category) : null
+        )}
       </Tbody>
     </Table>
   )

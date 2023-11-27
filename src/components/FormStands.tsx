@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import { Field, FieldArray } from "formik"
 import { Radio, VStack, Td, Tr, IconButton } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
@@ -13,7 +14,6 @@ import {
 import { FormStandType } from "../types"
 
 import { FormShelves } from "./FormShelves"
-import { ReactNode } from "react"
 
 interface Params {
   children: ReactNode
@@ -110,7 +110,7 @@ export const FormStands = ({
                   </Td>
                   <Td position="relative">
                     <Field
-                      name={`${fieldName}.stands.${standIndex}.back`}
+                      name={`${fieldName}.stands.${standIndex}.backVariant`}
                       as="select"
                     >
                       {variantsBack.map(({ value, name }) => (
