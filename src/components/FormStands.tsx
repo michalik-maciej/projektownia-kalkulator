@@ -1,9 +1,10 @@
 import { ReactNode } from "react"
 import { Field, FieldArray } from "formik"
-import { Radio, VStack, Td, Tr, IconButton } from "@chakra-ui/react"
+import { Radio, VStack, Td, Tr, IconButton, Select } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
+import { NumberInput } from "../NumberInput"
 import {
   getFootOptions,
   getWidthOptions,
@@ -61,7 +62,7 @@ export const FormStands = ({
                         ciąg
                       </Td>
                       <Td rowSpan={stands.length}>
-                        <Field name={`${fieldName}.height`} as="select">
+                        <Field name={`${fieldName}.height`} as={Select}>
                           {getHeightOptions().map((height) => (
                             <option key={height} value={height}>
                               {height}
@@ -70,7 +71,7 @@ export const FormStands = ({
                         </Field>
                       </Td>
                       <Td rowSpan={stands.length}>
-                        <Field name={`${fieldName}.depth`} as="select">
+                        <Field name={`${fieldName}.depth`} as={Select}>
                           {getFootOptions().map((depth) => (
                             <option key={depth} value={depth}>
                               {depth}
@@ -83,7 +84,7 @@ export const FormStands = ({
                   <Td>
                     <Field
                       name={`${fieldName}.stands.${standIndex}.width`}
-                      as="select"
+                      as={Select}
                     >
                       {getWidthOptions().map((width) => (
                         <option key={width} value={width}>
@@ -93,11 +94,8 @@ export const FormStands = ({
                     </Field>
                   </Td>
                   <Td>
-                    <Field
+                    <NumberInput
                       name={`${fieldName}.stands.${standIndex}.numberOfStands`}
-                      type="number"
-                      min={1}
-                      max={10}
                     />
                   </Td>
                   <Td>
@@ -111,7 +109,7 @@ export const FormStands = ({
                   <Td position="relative">
                     <Field
                       name={`${fieldName}.stands.${standIndex}.backVariant`}
-                      as="select"
+                      as={Select}
                     >
                       {variantsBack.map(({ value, name }) => (
                         <option

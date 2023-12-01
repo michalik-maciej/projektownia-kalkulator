@@ -1,7 +1,7 @@
 import { Field, FieldArray } from "formik"
-import { Flex, VStack, IconButton } from "@chakra-ui/react"
+import { Flex, VStack, IconButton, Select } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
-
+import { NumberInput } from "../NumberInput"
 import { getShelfOptions } from "../utils"
 import { FormShelfType } from "../types"
 
@@ -25,18 +25,15 @@ export const FormShelves = ({
           <VStack spacing="4">
             {shelves.map((_, shelfIndex) => (
               <Flex key={shelfIndex} position="relative">
-                <Field as="select" name={`${fieldName}.${shelfIndex}.depth`}>
+                <Field as={Select} name={`${fieldName}.${shelfIndex}.depth`}>
                   {getShelfOptions(width).map((depth) => (
                     <option key={depth} value={depth}>
                       {depth}
                     </option>
                   ))}
                 </Field>
-                <Field
+                <NumberInput
                   name={`${fieldName}.${shelfIndex}.numberOfShelves`}
-                  type="number"
-                  min={1}
-                  max={10}
                 />
                 <VStack
                   position="absolute"

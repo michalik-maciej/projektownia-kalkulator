@@ -20,7 +20,6 @@ export const Router = () => {
               path="/order"
               element={<Order collections={collections} />}
             />
-            <Route path="/offer" element={<div>Oferta</div>} />
             <Route path="/catalog" element={<div>Katalog elementów</div>} />
             <Route path="/*" element={<FormRoot collections={collections} />} />
           </Routes>

@@ -1,13 +1,15 @@
 import { ReactNode } from "react"
 import { Link } from "react-router-dom"
 
-import { Box, Button, HStack } from "@chakra-ui/react"
+import { Box, Button, HStack, Switch, useColorMode } from "@chakra-ui/react"
 
 interface Props {
   children: ReactNode
 }
 
 export const PageWrapper = ({ children }: Props) => {
+  const { toggleColorMode } = useColorMode()
+
   return (
     <Box pt="20" minH="100vh">
       <HStack
@@ -26,9 +28,7 @@ export const PageWrapper = ({ children }: Props) => {
         <Button as={Link} to="/order">
           Rozpiska
         </Button>
-        <Button as={Link} to="/offer">
-          Oferta
-        </Button>
+        <Switch onChange={toggleColorMode} />
         <Button as={Link} to="/catalog">
           Katalog
         </Button>
