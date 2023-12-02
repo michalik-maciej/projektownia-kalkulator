@@ -1,7 +1,7 @@
 import { Field, FieldArray } from "formik"
 import { Flex, VStack, IconButton, Select } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
-import { NumberInput } from "../NumberInput"
+import { NumberInput } from "./NumberInput"
 import { getShelfOptions } from "../utils"
 import { FormShelfType } from "../types"
 
@@ -24,8 +24,17 @@ export const FormShelves = ({
         <>
           <VStack spacing="4">
             {shelves.map((_, shelfIndex) => (
-              <Flex key={shelfIndex} position="relative">
-                <Field as={Select} name={`${fieldName}.${shelfIndex}.depth`}>
+              <Flex
+                key={shelfIndex}
+                position="relative"
+                gap="4"
+                alignItems="center"
+              >
+                <Field
+                  as={Select}
+                  size="sm"
+                  name={`${fieldName}.${shelfIndex}.depth`}
+                >
                   {getShelfOptions(width).map((depth) => (
                     <option key={depth} value={depth}>
                       {depth}
@@ -35,22 +44,14 @@ export const FormShelves = ({
                 <NumberInput
                   name={`${fieldName}.${shelfIndex}.numberOfShelves`}
                 />
-                <VStack
-                  position="absolute"
-                  spacing="1"
-                  top="50%"
-                  right="0"
-                  transform="translate(100%, -50%)"
-                >
-                  <IconButton
-                    icon={<DeleteIcon />}
-                    borderRadius="full"
-                    size="xs"
-                    p="0"
-                    aria-label="remove stand"
-                    onClick={() => removeShelf(shelfIndex)}
-                  />
-                </VStack>
+                <IconButton
+                  icon={<DeleteIcon />}
+                  borderRadius="full"
+                  size="xs"
+                  p="0"
+                  aria-label="remove shelves"
+                  onClick={() => removeShelf(shelfIndex)}
+                />
               </Flex>
             ))}
             <IconButton
@@ -58,7 +59,7 @@ export const FormShelves = ({
               borderRadius="full"
               size="xs"
               p="0"
-              aria-label="add stand"
+              aria-label="add shelves"
               type="button"
               onClick={() => pushShelf(initialShelf)}
             />

@@ -9,13 +9,12 @@ import {
   Tbody,
   IconButton,
 } from "@chakra-ui/react"
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
+import { AddIcon } from "@chakra-ui/icons"
 import { FieldArray } from "formik"
-
-import { FormStands } from "./FormStands"
 
 import { initialValues } from "../formInitialValues"
 import { FormCollectionType } from "../types"
+import { FormCollection } from "./FormCollection"
 
 type Props = {
   collections: FormCollectionType[]
@@ -32,7 +31,6 @@ export const FormRoot = ({ collections }: Props) => {
               "& Td, Th": {
                 border: "1px solid",
                 textAlign: "center",
-                w: "50px",
               },
             }}
           >
@@ -56,26 +54,13 @@ export const FormRoot = ({ collections }: Props) => {
               </Thead>
               <>
                 <Tbody>
-                  {collections.map(({ stands }, collectionIndex) => (
-                    <Fragment key={collectionIndex}>
-                      <FormStands
-                        fieldName={`collections.${collectionIndex}`}
-                        stands={stands}
-                        initialStand={initialValues.collections[0].stands[0]}
-                      >
-                        <IconButton
-                          icon={<DeleteIcon />}
-                          borderRadius="full"
-                          position="absolute"
-                          size="xs"
-                          p="0"
-                          aria-label="remove collection"
-                          bottom="0"
-                          right="0"
-                          onClick={() => removeCollection(collectionIndex)}
-                        />
-                      </FormStands>
-                    </Fragment>
+                  {collections.map((collection, collectionIndex) => (
+                    <FormCollection
+                      collectionIndex={collectionIndex}
+                      collection={collection}
+                      initialValues={initialValues}
+                      handleRemove={() => removeCollection(collectionIndex)}
+                    />
                   ))}
                 </Tbody>
               </>
@@ -85,7 +70,7 @@ export const FormRoot = ({ collections }: Props) => {
               borderRadius="full"
               position="absolute"
               size="sm"
-              aria-label="remove collection"
+              aria-label="add collection"
               bottom="0"
               left="50%"
               transform="translate(-50%, -50%)"

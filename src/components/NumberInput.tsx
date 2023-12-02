@@ -10,14 +10,17 @@ import { toInteger } from "lodash/fp"
 
 interface Props {
   name: string
+  isDisabled?: boolean
 }
 
-export const NumberInput = ({ name }: Props) => (
+export const NumberInput = ({ name, isDisabled }: Props) => (
   <Field name={name}>
     {({ field, form }: FieldProps) => (
       <ChakraNumberInput
         min={1}
         max={10}
+        isDisabled={isDisabled}
+        maxW="60px"
         value={field.value}
         onChange={(value: string) =>
           form.setFieldValue(field.name, toInteger(value))

@@ -44,7 +44,7 @@ export type FormCollectionType = {
   cover?: boolean
   height: string
   depth: string
-  numberOfCollections?: number
+  numberOfCollections: number
   variant: (typeof variantsCollection)[number]
   stands: FormStandType[]
 }

@@ -1,87 +1,36 @@
-import { ReactNode } from "react"
 import { Field, FieldArray } from "formik"
-import { Radio, VStack, Td, Tr, IconButton, Select } from "@chakra-ui/react"
+import { VStack, Td, Tr, IconButton, Select } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
-import { NumberInput } from "../NumberInput"
-import {
-  getFootOptions,
-  getWidthOptions,
-  getHeightOptions,
-  variantsCollection,
-  variantsBack,
-} from "../utils"
+import { NumberInput } from "./NumberInput"
+import { getWidthOptions, variantsBack } from "../utils"
 import { FormStandType } from "../types"
 
 import { FormShelves } from "./FormShelves"
+import { Fragment } from "react"
 
-interface Params {
-  children: ReactNode
+interface Props {
+  collectionIndex: number
   stands: FormStandType[]
-  fieldName: string
   initialStand: FormStandType
 }
 
 export const FormStands = ({
-  children,
   stands,
-  fieldName,
+  collectionIndex,
   initialStand,
-}: Params) => {
+}: Props) => {
+  const fieldName = `collections.${collectionIndex}`
   return (
     <FieldArray name={`${fieldName}.stands`}>
       {({ push: pushStand, remove: removeStand }) => {
         return (
           <>
-            {stands.map((stand, standIndex) => (
-              <Tr key={`${fieldName}.${standIndex}`} position="relative">
+            {stands.map((stand, standIndex) => {
+              const StandForm = () => (
                 <>
-                  {standIndex === 0 && (
-                    <>
-                      <Td position="relative" rowSpan={stands.length}>
-                        {children}
-                        <VStack>
-                          {variantsCollection.map((variant) => (
-                            <label key={variant}>
-                              {variant}
-                              <Field
-                                as={Radio}
-                                pl="2"
-                                defaultChecked={variant === "P"}
-                                key={variant}
-                                name={`${fieldName}.variant`}
-                                value={variant}
-                                isDisabled={variant !== "P"}
-                              />
-                            </label>
-                          ))}
-                        </VStack>
-                      </Td>
-                      <Td display="none" rowSpan={stands.length}>
-                        ciąg
-                      </Td>
-                      <Td rowSpan={stands.length}>
-                        <Field name={`${fieldName}.height`} as={Select}>
-                          {getHeightOptions().map((height) => (
-                            <option key={height} value={height}>
-                              {height}
-                            </option>
-                          ))}
-                        </Field>
-                      </Td>
-                      <Td rowSpan={stands.length}>
-                        <Field name={`${fieldName}.depth`} as={Select}>
-                          {getFootOptions().map((depth) => (
-                            <option key={depth} value={depth}>
-                              {depth}
-                            </option>
-                          ))}
-                        </Field>
-                      </Td>
-                    </>
-                  )}
-                  <Td>
+                  <Td position="relative">
                     <Field
                       name={`${fieldName}.stands.${standIndex}.width`}
                       as={Select}
@@ -152,8 +101,19 @@ export const FormStands = ({
                     </VStack>
                   </Td>
                 </>
-              </Tr>
-            ))}
+              )
+              return (
+                <Fragment key={`${fieldName}.${standIndex}`}>
+                  {standIndex === 0 ? (
+                    <StandForm />
+                  ) : (
+                    <Tr>
+                      <StandForm />
+                    </Tr>
+                  )}
+                </Fragment>
+              )
+            })}
           </>
         )
       }}

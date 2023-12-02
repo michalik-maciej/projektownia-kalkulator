@@ -8,9 +8,10 @@ export const variantsBack = [
   { value: "1", name: "standard" },
   { value: "euro", name: "euro" },
   { value: "0", name: "brak" },
+  { value: "2", name: "podwójne" },
 ]
 
-export const variantsCollection = ["P", "G", "S"] as const
+export const variantsCollection = ["P", "G"] as const
 
 export const getFootOptions = () => map("d", feet)
 
