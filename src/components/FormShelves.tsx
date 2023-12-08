@@ -56,7 +56,7 @@ export const FormShelves = ({
           ))}
           <Tooltip label="Dodaj półki">
             <IconButton
-              icon={<AddIcon />}
+              icon={<AddIcon opacity="0.7" />}
               borderRadius="full"
               size="xs"
               px="5"

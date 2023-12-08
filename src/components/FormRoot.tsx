@@ -38,7 +38,7 @@ export const FormRoot = ({ collections }: Props) => {
             ))}
             <Tooltip label="Dodaj ciąg">
               <IconButton
-                icon={<AddIcon />}
+                icon={<AddIcon opacity="0.7" />}
                 px="8"
                 py="4"
                 borderRadius="full"

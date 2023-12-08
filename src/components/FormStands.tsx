@@ -65,7 +65,7 @@ export const FormStands = ({
                     {size(stands) === standIndex + 1 && (
                       <Tooltip label="Dodaj regał">
                         <IconButton
-                          icon={<AddIcon />}
+                          icon={<AddIcon opacity="0.7" />}
                           borderRadius="full"
                           px="5"
                           my="2"
