@@ -1,15 +1,16 @@
+import { Fragment } from "react"
 import { Field } from "formik"
 import {
   Radio,
   VStack,
-  Td,
-  Tr,
   IconButton,
   Select,
   Image,
   HStack,
+  Tooltip,
 } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
+import { GridItem } from "./GridItem"
 
 import { getFootOptions, getHeightOptions, variantsCollection } from "../utils"
 import { FormCollectionType } from "../types"
@@ -34,46 +35,45 @@ export const FormCollection = ({
   const fieldName = `collections.${collectionIndex}`
 
   return (
-    <Tr key={collectionIndex} position="relative">
-      <Td rowSpan={collection.stands.length}>
-        <IconButton
-          icon={<DeleteIcon />}
-          borderRadius="full"
-          position="absolute"
-          size="xs"
-          m="1"
-          aria-label="remove collection"
-          bottom="0"
-          left="0"
-          // @ts-ignore
-          onClick={handleRemove}
-        />
-        <VStack>
-          {variantsCollection.map((variant) => (
-            <label key={variant}>
-              <HStack>
-                <Image
-                  src={variant === "G" ? Gondola : Przyscienny}
-                  width="20px"
-                />
-                <Field
-                  as={Radio}
-                  defaultChecked={variant === "P"}
-                  key={variant}
-                  name={`${fieldName}.variant`}
-                  value={variant}
-                  isDisabled={variant !== "P"}
-                />
-              </HStack>
-            </label>
-          ))}
-          <NumberInput isDisabled name={`${fieldName}.numberOfCollections`} />
+    <Fragment key={collectionIndex}>
+      <GridItem rowSpan={collection.stands.length}>
+        <VStack gap="6">
+          <HStack gap="6">
+            {variantsCollection.map((variant) => (
+              <label key={variant}>
+                <HStack gap="1">
+                  <Image
+                    src={variant === "G" ? Gondola : Przyscienny}
+                    width="20px"
+                  />
+                  <Field
+                    as={Radio}
+                    defaultChecked={variant === "P"}
+                    key={variant}
+                    name={`${fieldName}.variant`}
+                    value={variant}
+                    isDisabled={variant !== "P"}
+                  />
+                </HStack>
+              </label>
+            ))}
+          </HStack>
+          <HStack gap="4">
+            <NumberInput isDisabled name={`${fieldName}.numberOfCollections`} />
+            <Tooltip label="Usuń ciąg">
+              <IconButton
+                icon={<DeleteIcon opacity="0.7" />}
+                borderRadius="full"
+                size="sm"
+                aria-label="remove collection"
+                // @ts-ignore
+                onClick={handleRemove}
+              />
+            </Tooltip>
+          </HStack>
         </VStack>
-      </Td>
-      <Td display="none" rowSpan={collection.stands.length}>
-        ciąg
-      </Td>
-      <Td rowSpan={collection.stands.length}>
+      </GridItem>
+      <GridItem rowSpan={collection.stands.length}>
         <Field name={`${fieldName}.height`} as={Select}>
           {getHeightOptions().map((height) => (
             <option key={height} value={height}>
@@ -81,8 +81,8 @@ export const FormCollection = ({
             </option>
           ))}
         </Field>
-      </Td>
-      <Td rowSpan={collection.stands.length}>
+      </GridItem>
+      <GridItem rowSpan={collection.stands.length}>
         <Field name={`${fieldName}.depth`} as={Select}>
           {getFootOptions().map((depth) => (
             <option key={depth} value={depth}>
@@ -90,12 +90,12 @@ export const FormCollection = ({
             </option>
           ))}
         </Field>
-      </Td>
+      </GridItem>
       <FormStands
         stands={collection.stands}
         collectionIndex={collectionIndex}
         initialStand={initialValues.collections[0].stands[0]}
       />
-    </Tr>
+    </Fragment>
   )
 }

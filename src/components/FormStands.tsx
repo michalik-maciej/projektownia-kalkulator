@@ -1,14 +1,14 @@
 import { Field, FieldArray } from "formik"
-import { VStack, Td, Tr, IconButton, Select } from "@chakra-ui/react"
+import { VStack, IconButton, Select, HStack, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
-import { NumberInput } from "./NumberInput"
 import { getWidthOptions, variantsBack } from "../utils"
 import { FormStandType } from "../types"
 
+import { GridItem } from "./GridItem"
+import { NumberInput } from "./NumberInput"
 import { FormShelves } from "./FormShelves"
-import { Fragment } from "react"
 
 interface Props {
   collectionIndex: number
@@ -27,93 +27,83 @@ export const FormStands = ({
       {({ push: pushStand, remove: removeStand }) => {
         return (
           <>
-            {stands.map((stand, standIndex) => {
-              const StandForm = () => (
-                <>
-                  <Td position="relative">
-                    <Field
-                      name={`${fieldName}.stands.${standIndex}.width`}
-                      as={Select}
-                    >
-                      {getWidthOptions().map((width) => (
-                        <option key={width} value={width}>
-                          {width}
-                        </option>
-                      ))}
-                    </Field>
-                  </Td>
-                  <Td>
-                    <NumberInput
-                      name={`${fieldName}.stands.${standIndex}.numberOfStands`}
-                    />
-                  </Td>
-                  <Td>
-                    <FormShelves
-                      fieldName={`${fieldName}.stands.${standIndex}.shelves`}
-                      initialShelf={initialStand.shelves[0]}
-                      width={stand.width}
-                      shelves={stand.shelves}
-                    />
-                  </Td>
-                  <Td position="relative">
-                    <Field
-                      name={`${fieldName}.stands.${standIndex}.backVariant`}
-                      as={Select}
-                    >
-                      {variantsBack.map(({ value, name }) => (
-                        <option
-                          key={value}
-                          value={value}
-                          disabled={value === "euro"}
-                        >
-                          {name}
-                        </option>
-                      ))}
-                    </Field>
-                    <VStack
-                      position="absolute"
-                      spacing="1"
-                      top="50%"
-                      right="-4px"
-                      transform="translate(100%, -50%)"
-                    >
-                      {size(stands) > 1 && (
+            {stands.map((stand, standIndex) => (
+              <>
+                <GridItem>
+                  <Field
+                    name={`${fieldName}.stands.${standIndex}.width`}
+                    as={Select}
+                  >
+                    {getWidthOptions().map((width) => (
+                      <option key={width} value={width}>
+                        {width}
+                      </option>
+                    ))}
+                  </Field>
+                </GridItem>
+                <GridItem position="relative">
+                  <VStack>
+                    <HStack gap="4">
+                      <NumberInput
+                        name={`${fieldName}.stands.${standIndex}.numberOfStands`}
+                      />
+                      <Tooltip
+                        label="Usuń regał"
+                        {...(size(stands) === 1 && { visibility: "hidden" })}
+                      >
                         <IconButton
-                          icon={<DeleteIcon />}
+                          icon={<DeleteIcon opacity="0.7" />}
                           borderRadius="full"
-                          size="xs"
+                          size="sm"
                           p="0"
+                          isDisabled={size(stands) === 1}
                           aria-label="remove stand"
                           onClick={() => removeStand(standIndex)}
                         />
-                      )}
-                      {size(stands) === standIndex + 1 && (
+                      </Tooltip>
+                    </HStack>
+                    {size(stands) === standIndex + 1 && (
+                      <Tooltip label="Dodaj regał">
                         <IconButton
                           icon={<AddIcon />}
                           borderRadius="full"
+                          px="5"
+                          my="2"
                           size="xs"
-                          p="0"
                           aria-label="add stand"
                           type="button"
                           onClick={() => pushStand(initialStand)}
                         />
-                      )}
-                    </VStack>
-                  </Td>
-                </>
-              )
-              return (
-                <Fragment key={`${fieldName}.${standIndex}`}>
-                  {standIndex === 0 ? (
-                    <StandForm />
-                  ) : (
-                    <Tr>
-                      <StandForm />
-                    </Tr>
-                  )}
-                </Fragment>
-              )
-            })}
+                      </Tooltip>
+                    )}
+                  </VStack>
+                </GridItem>
+                <GridItem>
+                  <FormShelves
+                    fieldName={`${fieldName}.stands.${standIndex}.shelves`}
+                    initialShelf={initialStand.shelves[0]}
+                    width={stand.width}
+                    shelves={stand.shelves}
+                  />
+                </GridItem>
+                <GridItem position="relative">
+                  <Field
+                    name={`${fieldName}.stands.${standIndex}.backVariant`}
+                    as={Select}
+                  >
+                    {variantsBack.map(({ value, name }) => (
+                      <option
+                        key={value}
+                        value={value}
+                        disabled={value === "euro"}
+                      >
+                        {name}
+                      </option>
+                    ))}
+                  </Field>
+                </GridItem>
+              </>
+            ))}
           </>
         )
       }}

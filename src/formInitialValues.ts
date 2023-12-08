@@ -15,7 +15,7 @@ const initialShelves = {
 }
 
 const initialStands = {
-  backVariant: variantsBack[0].value,
+  backVariant: variantsBack[1].value,
   numberOfStands: 1,
   shelves: [initialShelves],
   width: initialWidth,

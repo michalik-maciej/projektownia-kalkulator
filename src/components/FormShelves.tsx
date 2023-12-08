@@ -1,5 +1,5 @@
 import { Field, FieldArray } from "formik"
-import { Flex, VStack, IconButton, Select } from "@chakra-ui/react"
+import { Flex, VStack, IconButton, Select, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { NumberInput } from "./NumberInput"
 import { getShelfOptions } from "../utils"
@@ -21,50 +21,52 @@ export const FormShelves = ({
   return (
     <FieldArray name={`${fieldName}`}>
       {({ push: pushShelf, remove: removeShelf }) => (
-        <>
-          <VStack spacing="4">
-            {shelves.map((_, shelfIndex) => (
-              <Flex
-                key={shelfIndex}
-                position="relative"
-                gap="4"
-                alignItems="center"
+        <VStack>
+          {shelves.map((_, shelfIndex) => (
+            <Flex
+              key={shelfIndex}
+              position="relative"
+              gap="4"
+              alignItems="center"
+            >
+              <Field
+                as={Select}
+                size="sm"
+                name={`${fieldName}.${shelfIndex}.depth`}
               >
-                <Field
-                  as={Select}
-                  size="sm"
-                  name={`${fieldName}.${shelfIndex}.depth`}
-                >
-                  {getShelfOptions(width).map((depth) => (
-                    <option key={depth} value={depth}>
-                      {depth}
-                    </option>
-                  ))}
-                </Field>
-                <NumberInput
-                  name={`${fieldName}.${shelfIndex}.numberOfShelves`}
-                />
+                {getShelfOptions(width).map((depth) => (
+                  <option key={depth} value={depth}>
+                    {depth}
+                  </option>
+                ))}
+              </Field>
+              <NumberInput
+                name={`${fieldName}.${shelfIndex}.numberOfShelves`}
+              />
+              <Tooltip label="Usuń półki">
                 <IconButton
-                  icon={<DeleteIcon />}
+                  icon={<DeleteIcon opacity="0.7" />}
                   borderRadius="full"
-                  size="xs"
-                  p="0"
+                  size="sm"
                   aria-label="remove shelves"
                   onClick={() => removeShelf(shelfIndex)}
                 />
-              </Flex>
-            ))}
+              </Tooltip>
+            </Flex>
+          ))}
+          <Tooltip label="Dodaj półki">
             <IconButton
               icon={<AddIcon />}
               borderRadius="full"
               size="xs"
-              p="0"
+              px="5"
+              my="2"
               aria-label="add shelves"
               type="button"
               onClick={() => pushShelf(initialShelf)}
             />
-          </VStack>
-        </>
+          </Tooltip>
+        </VStack>
       )}
     </FieldArray>
   )

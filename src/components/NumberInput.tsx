@@ -5,15 +5,16 @@ import {
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInputStepper,
+  NumberInputProps,
 } from "@chakra-ui/react"
 import { toInteger } from "lodash/fp"
 
-interface Props {
+interface Props extends NumberInputProps {
   name: string
   isDisabled?: boolean
 }
 
-export const NumberInput = ({ name, isDisabled }: Props) => (
+export const NumberInput = ({ name, isDisabled, ...rest }: Props) => (
   <Field name={name}>
     {({ field, form }: FieldProps) => (
       <ChakraNumberInput
@@ -26,6 +27,7 @@ export const NumberInput = ({ name, isDisabled }: Props) => (
           form.setFieldValue(field.name, toInteger(value))
         }
         size="sm"
+        {...rest}
       >
         <NumberInputField />
         <NumberInputStepper>
