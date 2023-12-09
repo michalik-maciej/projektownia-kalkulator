@@ -29,7 +29,7 @@ export const FormStands = ({
           <>
             {stands.map((stand, standIndex) => (
               <>
-                <GridItem>
+                <GridItem collectionIndex={collectionIndex}>
                   <Field
                     name={`${fieldName}.stands.${standIndex}.width`}
                     as={Select}
@@ -41,7 +41,7 @@ export const FormStands = ({
                     ))}
                   </Field>
                 </GridItem>
-                <GridItem position="relative">
+                <GridItem collectionIndex={collectionIndex} position="relative">
                   <VStack>
                     <HStack gap="4">
                       <NumberInput
@@ -78,7 +78,7 @@ export const FormStands = ({
                     )}
                   </VStack>
                 </GridItem>
-                <GridItem>
+                <GridItem collectionIndex={collectionIndex}>
                   <FormShelves
                     fieldName={`${fieldName}.stands.${standIndex}.shelves`}
                     initialShelf={initialStand.shelves[0]}
@@ -86,7 +86,7 @@ export const FormStands = ({
                     shelves={stand.shelves}
                   />
                 </GridItem>
-                <GridItem position="relative">
+                <GridItem collectionIndex={collectionIndex} position="relative">
                   <Field
                     name={`${fieldName}.stands.${standIndex}.backVariant`}
                     as={Select}

@@ -16,6 +16,7 @@ export const FormRoot = ({ collections }: Props) => {
         <>
           <Grid
             m="8"
+            gap="0.5"
             templateRows="repeat(2, auto)"
             templateColumns="repeat(7, auto)"
             position="relative"

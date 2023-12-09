@@ -8,6 +8,7 @@ import {
   Image,
   HStack,
   Tooltip,
+  Checkbox,
 } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { GridItem } from "./GridItem"
@@ -36,7 +37,18 @@ export const FormCollection = ({
 
   return (
     <Fragment key={collectionIndex}>
-      <GridItem rowSpan={collection.stands.length}>
+      <GridItem
+        rowSpan={collection.stands.length}
+        collectionIndex={collectionIndex}
+      >
+        <Field
+          as={Checkbox}
+          position="absolute"
+          size="lg"
+          top="2px"
+          left="-40px"
+          name={`${fieldName}.isCollapsed`}
+        />
         <VStack gap="6">
           <HStack gap="6">
             {variantsCollection.map((variant) => (
@@ -59,7 +71,7 @@ export const FormCollection = ({
             ))}
           </HStack>
           <HStack gap="4">
-            <NumberInput isDisabled name={`${fieldName}.numberOfCollections`} />
+            <NumberInput name={`${fieldName}.numberOfCollections`} />
             <Tooltip label="Usuń ciąg">
               <IconButton
                 icon={<DeleteIcon opacity="0.7" />}
@@ -73,7 +85,10 @@ export const FormCollection = ({
           </HStack>
         </VStack>
       </GridItem>
-      <GridItem rowSpan={collection.stands.length}>
+      <GridItem
+        collectionIndex={collectionIndex}
+        rowSpan={collection.stands.length}
+      >
         <Field name={`${fieldName}.height`} as={Select}>
           {getHeightOptions().map((height) => (
             <option key={height} value={height}>
@@ -82,7 +97,10 @@ export const FormCollection = ({
           ))}
         </Field>
       </GridItem>
-      <GridItem rowSpan={collection.stands.length}>
+      <GridItem
+        collectionIndex={collectionIndex}
+        rowSpan={collection.stands.length}
+      >
         <Field name={`${fieldName}.depth`} as={Select}>
           {getFootOptions().map((depth) => (
             <option key={depth} value={depth}>

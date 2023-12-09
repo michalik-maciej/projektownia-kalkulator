@@ -3,7 +3,6 @@ import { Formik, Form } from "formik"
 
 import { FormRoot } from "./FormRoot"
 import { Order } from "./Order"
-import { Table } from "./Table"
 import { initialValues } from "../formInitialValues"
 
 export const Router = () => {
@@ -15,7 +14,6 @@ export const Router = () => {
       {({ values: { collections } }) => (
         <Form>
           <Routes>
-            <Route path="/table" element={<Table />} />
             <Route
               path="/order"
               element={<Order collections={collections} />}

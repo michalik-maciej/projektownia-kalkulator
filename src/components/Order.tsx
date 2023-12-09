@@ -31,7 +31,7 @@ export const Order = ({ collections }: Props) => {
   const renderSection = ({ name, order }: SectionProps) => (
     <>
       <Tr>
-        <Td colSpan={2} fontWeight={600}>
+        <Td pl={2} colSpan={2} fontWeight={600}>
           {name}
         </Td>
       </Tr>

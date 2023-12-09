@@ -22,6 +22,7 @@ const initialStands = {
 }
 
 const initialCollection: FormCollectionType = {
+  isCollapsed: false,
   numberOfCollections: 1,
   height: getHeightOptions()[3],
   depth: getFootOptions()[2],
