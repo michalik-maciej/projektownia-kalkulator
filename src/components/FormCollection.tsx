@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { Field, FieldProps } from "formik"
+import { Field, FieldArray, FieldProps } from "formik"
 import {
   Radio,
   VStack,
@@ -23,7 +23,7 @@ import {
 } from "../utils"
 import { FormCollectionType } from "../types"
 
-import { FormStands } from "./FormStands"
+import { FormStand } from "./FormStand"
 import { NumberInput } from "./NumberInput"
 import { BaseCoverInput } from "./BaseCoverInput"
 import { CollapseToggle } from "./CollapseToggle"
@@ -140,11 +140,26 @@ export const FormCollection = ({
           ))}
         </Field>
       </GridItem>
-      <FormStands
-        collection={collection}
-        collectionIndex={collectionIndex}
-        initialStand={initialValues.collections[0].stands[0]}
-      />
+      <FieldArray name={`${fieldName}.stands`}>
+        {({ push: pushStand, remove: removeStand }) => (
+          <>
+            {collection.stands.map((_, standIndex) => {
+              const initialStand = initialValues.collections[0].stands[0]
+
+              return (
+                <FormStand
+                  collectionIndex={collectionIndex}
+                  collection={collection}
+                  handleAdd={() => pushStand(initialStand)}
+                  handleRemove={() => removeStand(standIndex)}
+                  initialStand={initialStand}
+                  standIndex={standIndex}
+                />
+              )
+            })}
+          </>
+        )}
+      </FieldArray>
       <GridItem py="2" colStart={1} colSpan={7} visibility="hidden" />
     </Fragment>
   )
