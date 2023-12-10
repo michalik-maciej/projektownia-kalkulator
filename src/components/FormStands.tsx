@@ -29,18 +29,6 @@ export const FormStands = ({
           <>
             {stands.map((stand, standIndex) => (
               <>
-                <GridItem collectionIndex={collectionIndex}>
-                  <Field
-                    name={`${fieldName}.stands.${standIndex}.width`}
-                    as={Select}
-                  >
-                    {getWidthOptions().map((width) => (
-                      <option key={width} value={width}>
-                        {width}
-                      </option>
-                    ))}
-                  </Field>
-                </GridItem>
                 <GridItem collectionIndex={collectionIndex} position="relative">
                   <VStack>
                     <HStack gap="4">
@@ -79,6 +67,18 @@ export const FormStands = ({
                   </VStack>
                 </GridItem>
                 <GridItem collectionIndex={collectionIndex}>
+                  <Field
+                    name={`${fieldName}.stands.${standIndex}.width`}
+                    as={Select}
+                  >
+                    {getWidthOptions().map((width) => (
+                      <option key={width} value={width}>
+                        {width}
+                      </option>
+                    ))}
+                  </Field>
+                </GridItem>
+                <GridItem collectionIndex={collectionIndex}>
                   <FormShelves
                     fieldName={`${fieldName}.stands.${standIndex}.shelves`}
                     initialShelf={initialStand.shelves[0]}
@@ -95,7 +95,7 @@ export const FormStands = ({
                       <option
                         key={value}
                         value={value}
-                        disabled={value === "euro"}
+                        //  disabled={value === "euro"}
                       >
                         {name}
                       </option>

@@ -25,8 +25,8 @@ export const FormRoot = ({ collections }: Props) => {
             <GridItem rowSpan={2}>Wysokość</GridItem>
             <GridItem rowSpan={2}>Stopa</GridItem>
             <GridItem colSpan={4}>Regał</GridItem>
-            <GridItem>Szerokość</GridItem>
             <GridItem>Ilość</GridItem>
+            <GridItem>Szerokość</GridItem>
             <GridItem>Półki</GridItem>
             <GridItem>Plecy</GridItem>
             {collections.map((collection, collectionIndex) => (
