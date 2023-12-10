@@ -30,13 +30,21 @@ export const aggregateByBacks = ({
   return order
 }
 
-const aggregateByStands = (collection: FormCollectionType) => {
+const aggregateByStands = ({
+  stands,
+  numberOfCollections,
+  height,
+}: FormCollectionType) => {
   const groupStands = () =>
     groupBy(
       "description",
       flatMap(
-        (stand) => aggregateByBacks({ height: collection.height, ...stand }),
-        collection.stands
+        (stand) =>
+          aggregateByBacks({
+            height,
+            ...stand,
+          }),
+        stands
       )
     )
 
@@ -44,7 +52,7 @@ const aggregateByStands = (collection: FormCollectionType) => {
     map(
       (group) => ({
         description: group[0].description,
-        number: sumBy("number", group),
+        number: sumBy("number", group) * numberOfCollections,
       }),
       groupStands()
     )

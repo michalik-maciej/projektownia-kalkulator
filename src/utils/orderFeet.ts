@@ -1,22 +1,22 @@
-import { groupBy, map, sumBy, flatMap, size, filter } from "lodash/fp"
+import { groupBy, map, sumBy } from "lodash/fp"
 
 import { FormCollectionType, OrderType } from "../types"
 
 export const orderFeet = (data: FormCollectionType[]): OrderType => {
-  const group = groupBy("depth", data)
+  const mappedData = map(
+    ({ depth, numberOfCollections, stands }) => ({
+      depth,
+      numberOfFeet: (sumBy("numberOfStands", stands) + 1) * numberOfCollections,
+    }),
+    data
+  )
 
-  const sum = map((group) => {
-    const numberOfCollectionsByFoot = size(
-      filter(["depth", group[0].depth], data)
-    )
+  const depthGroups = groupBy("depth", mappedData)
 
+  return map((group) => {
     return {
       description: group[0].depth,
-      number:
-        sumBy("numberOfStands", flatMap("stands", group)) +
-        numberOfCollectionsByFoot,
+      number: sumBy("numberOfFeet", group),
     }
-  }, group)
-
-  return sum
+  }, depthGroups)
 }

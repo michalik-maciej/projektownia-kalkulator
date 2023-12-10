@@ -37,21 +37,22 @@ export const orderShelves = (data: FormCollectionType[]): OrderType => {
     return sumShelves()
   }
 
-  const aggregateByStands = (collection: FormCollectionType) => {
+  const aggregateByStands = ({
+    depth,
+    numberOfCollections,
+    stands,
+  }: FormCollectionType) => {
     const groupStands = () =>
       groupBy(
         "description",
-        flatMap(
-          (stand) => aggregateByShelves({ depth: collection.depth, ...stand }),
-          collection.stands
-        )
+        flatMap((stand) => aggregateByShelves({ depth, ...stand }), stands)
       )
 
     const sumStands = () =>
       map(
         (group) => ({
           description: group[0].description,
-          number: sumBy("number", group),
+          number: sumBy("number", group) * numberOfCollections,
         }),
         groupStands()
       )

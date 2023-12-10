@@ -17,17 +17,20 @@ export const orderSupports = (data: FormCollectionType[]): OrderType => {
     return sumSupports
   }
 
-  const aggregateByStands = (collection: FormCollectionType) => {
+  const aggregateByStands = ({
+    stands,
+    numberOfCollections,
+  }: FormCollectionType) => {
     const groupStands = () =>
       groupBy(
         "description",
-        flatMap((stand) => aggregateBySupports(stand), collection.stands)
+        flatMap((stand) => aggregateBySupports(stand), stands)
       )
 
     const sumStands = map(
       (group) => ({
         description: group[0].description,
-        number: sumBy("number", group),
+        number: sumBy("number", group) * numberOfCollections,
       }),
       groupStands()
     )
