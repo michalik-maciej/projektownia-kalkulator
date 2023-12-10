@@ -4,6 +4,7 @@ import { groupBy, map, flatMap, sumBy } from "lodash/fp"
 import { FormCollectionType, FormStandType, OrderType } from "../types"
 
 import { getBacks } from "./getProducts"
+import { toInteger } from "lodash"
 
 export const aggregateByBacks = ({
   backVariant,
@@ -16,12 +17,17 @@ export const aggregateByBacks = ({
   }
 
   const backs = orderBy(["h"], ["desc"], getBacks({ width }))
-  let remainder = toNumber(height)
   const order = []
   const BACK_OFFSET = 10
+
+  let remainder = toNumber(height)
+
   for (const back of backs) {
     if (remainder >= toNumber(back.h) + BACK_OFFSET) {
-      const number = Math.floor(remainder / toNumber(back.h)) * numberOfStands
+      const number =
+        Math.floor(remainder / toNumber(back.h)) *
+        numberOfStands *
+        toInteger(backVariant)
 
       order.push({ description: `${back.w} / ${back.h}`, number })
       remainder = remainder % toNumber(back.h)
