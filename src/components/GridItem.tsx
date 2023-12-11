@@ -29,7 +29,7 @@ export const GridItem = ({ collectionIndex, ...props }: Props) => {
       alignItems="center"
       justifyContent="center"
       sx={{
-        "& > :not(.chakra-checkbox)": {
+        "& > :not(.collapse-visible)": {
           m: "auto",
           visibility: isCollapsed ? "hidden" : "initial",
         },

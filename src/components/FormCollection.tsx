@@ -1,25 +1,26 @@
 import { Fragment } from "react"
-import { Field } from "formik"
+import { Field, FieldProps } from "formik"
 import {
   Radio,
   VStack,
   IconButton,
   Select,
-  Image,
   HStack,
   Tooltip,
-  Checkbox,
+  Tag,
 } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
 import { GridItem } from "./GridItem"
 
+import { Gondola } from "../icons/Gondola"
+import { Przyscienny } from "../icons/Przyscienny"
+
 import { getFootOptions, getHeightOptions, variantsCollection } from "../utils"
 import { FormCollectionType } from "../types"
-import Gondola from "../assets/gondola.svg"
-import Przyscienny from "../assets/przyscienny.svg"
 
 import { FormStands } from "./FormStands"
 import { NumberInput } from "./NumberInput"
+import { CollapseToggle } from "./CollapseToggle"
 
 interface Props {
   collectionIndex: number
@@ -41,23 +42,28 @@ export const FormCollection = ({
         rowSpan={collection.stands.length}
         collectionIndex={collectionIndex}
       >
-        <Field
-          as={Checkbox}
+        <Field as={CollapseToggle} name={`${fieldName}.isCollapsed`}>
+          {(field: FieldProps) => <CollapseToggle {...field} />}
+        </Field>
+        <Tag
+          cursor="default"
+          fontWeight="bold"
+          className="collapse-visible"
+          rounded="full"
+          size="sm"
           position="absolute"
-          size="lg"
+          px={2}
           top="2px"
-          left="-40px"
-          name={`${fieldName}.isCollapsed`}
-        />
+          left="4px"
+        >
+          {collectionIndex + 1}
+        </Tag>
         <VStack gap="6">
           <HStack gap="6">
             {variantsCollection.map((variant) => (
               <label key={variant}>
                 <HStack gap="1">
-                  <Image
-                    src={variant === "G" ? Gondola : Przyscienny}
-                    width="20px"
-                  />
+                  {variant === "G" ? <Gondola /> : <Przyscienny />}
                   <Field
                     as={Radio}
                     defaultChecked={variant === "P"}
