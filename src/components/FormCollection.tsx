@@ -95,7 +95,7 @@ export const FormCollection = ({
         collectionIndex={collectionIndex}
         rowSpan={collection.stands.length}
       >
-        <Field name={`${fieldName}.height`} as={Select}>
+        <Field name={`${fieldName}.height`} as={Select} size="sm">
           {getHeightOptions().map((height) => (
             <option key={height} value={height}>
               {height}
@@ -107,7 +107,7 @@ export const FormCollection = ({
         collectionIndex={collectionIndex}
         rowSpan={collection.stands.length}
       >
-        <Field name={`${fieldName}.depth`} as={Select}>
+        <Field name={`${fieldName}.depth`} as={Select} size="sm">
           {getFootOptions().map((depth) => (
             <option key={depth} value={depth}>
               {depth}

@@ -35,6 +35,17 @@ export const FormStands = ({
                       <NumberInput
                         name={`${fieldName}.stands.${standIndex}.numberOfStands`}
                       />
+                      <Field
+                        as={Select}
+                        name={`${fieldName}.stands.${standIndex}.width`}
+                        size="sm"
+                      >
+                        {getWidthOptions().map((width) => (
+                          <option key={width} value={width}>
+                            {width}
+                          </option>
+                        ))}
+                      </Field>
                       <Tooltip
                         label="Usuń regał"
                         {...(size(stands) === 1 && { visibility: "hidden" })}
@@ -67,18 +78,6 @@ export const FormStands = ({
                   </VStack>
                 </GridItem>
                 <GridItem collectionIndex={collectionIndex}>
-                  <Field
-                    name={`${fieldName}.stands.${standIndex}.width`}
-                    as={Select}
-                  >
-                    {getWidthOptions().map((width) => (
-                      <option key={width} value={width}>
-                        {width}
-                      </option>
-                    ))}
-                  </Field>
-                </GridItem>
-                <GridItem collectionIndex={collectionIndex}>
                   <FormShelves
                     fieldName={`${fieldName}.stands.${standIndex}.shelves`}
                     initialShelf={initialStand.shelves[0]}
@@ -89,6 +88,7 @@ export const FormStands = ({
                 <GridItem collectionIndex={collectionIndex} position="relative">
                   <Field
                     name={`${fieldName}.stands.${standIndex}.backVariant`}
+                    size="sm"
                     as={Select}
                   >
                     {variantsBack.map(({ value, name }) => (

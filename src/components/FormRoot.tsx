@@ -18,15 +18,14 @@ export const FormRoot = ({ collections }: Props) => {
             m="8"
             gap="0.5"
             templateRows="repeat(2, auto)"
-            templateColumns="repeat(7, auto)"
+            templateColumns="repeat(6, auto)"
             position="relative"
           >
             <GridItem rowSpan={2}>Ciąg</GridItem>
             <GridItem rowSpan={2}>Wysokość</GridItem>
             <GridItem rowSpan={2}>Stopa</GridItem>
-            <GridItem colSpan={4}>Regał</GridItem>
-            <GridItem>Ilość</GridItem>
-            <GridItem>Szerokość</GridItem>
+            <GridItem colSpan={3}>Regał</GridItem>
+            <GridItem>Ilość / Szerokość</GridItem>
             <GridItem>Półki</GridItem>
             <GridItem>Plecy</GridItem>
             {collections.map((collection, collectionIndex) => (

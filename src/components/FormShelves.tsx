@@ -29,6 +29,9 @@ export const FormShelves = ({
               gap="4"
               alignItems="center"
             >
+              <NumberInput
+                name={`${fieldName}.${shelfIndex}.numberOfShelves`}
+              />
               <Field
                 as={Select}
                 size="sm"
@@ -40,9 +43,6 @@ export const FormShelves = ({
                   </option>
                 ))}
               </Field>
-              <NumberInput
-                name={`${fieldName}.${shelfIndex}.numberOfShelves`}
-              />
               <Tooltip label="Usuń półki">
                 <IconButton
                   icon={<DeleteIcon opacity="0.7" />}
