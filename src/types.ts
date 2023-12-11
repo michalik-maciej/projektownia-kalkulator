@@ -53,4 +53,5 @@ export type FormCollectionType = {
 export type OrderType = {
   description: string
   number: number
+  price: number
 }[]

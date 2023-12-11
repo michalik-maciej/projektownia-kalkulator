@@ -1,5 +1,6 @@
-import { groupBy, map, flatMap, sumBy } from "lodash/fp"
+import { groupBy, map, flatMap, sumBy, isEqual } from "lodash/fp"
 
+import { shelves as products } from "../products"
 import { FormCollectionType, FormStandType, OrderType } from "../types"
 
 export const orderShelves = (data: FormCollectionType[]): OrderType => {
@@ -26,13 +27,18 @@ export const orderShelves = (data: FormCollectionType[]): OrderType => {
     const groupShelves = () => groupBy("depth", joinShelves())
 
     const sumShelves = () =>
-      map(
-        (group) => ({
-          description: `${width} / ${group[0].depth}`,
-          number: sumBy("numberOfShelves", group),
-        }),
-        groupShelves()
-      )
+      map((group) => {
+        const [shelf] = products.filter(
+          ({ d, w }) => isEqual(d, group[0].depth) && isEqual(w, width)
+        )
+        const number = sumBy("numberOfShelves", group)
+
+        return {
+          description: `${width} / ${shelf.d}`,
+          number,
+          price: number * shelf.price,
+        }
+      }, groupShelves())
 
     return sumShelves()
   }
@@ -53,6 +59,7 @@ export const orderShelves = (data: FormCollectionType[]): OrderType => {
         (group) => ({
           description: group[0].description,
           number: sumBy("number", group) * numberOfCollections,
+          price: sumBy("price", group) * numberOfCollections,
         }),
         groupStands()
       )
@@ -72,6 +79,7 @@ export const orderShelves = (data: FormCollectionType[]): OrderType => {
         (group) => ({
           description: group[0].description,
           number: sumBy("number", group),
+          price: sumBy("price", group),
         }),
         groupCollections()
       )

@@ -1,3 +1,4 @@
+export * from "./calculatePrice"
 export * from "./getFormOptions"
 export * from "./getProducts"
 export * from "./orderBacks"

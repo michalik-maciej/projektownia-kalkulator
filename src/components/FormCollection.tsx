@@ -15,7 +15,12 @@ import { GridItem } from "./GridItem"
 import { Gondola } from "../icons/Gondola"
 import { Przyscienny } from "../icons/Przyscienny"
 
-import { getFootOptions, getHeightOptions, variantsCollection } from "../utils"
+import {
+  calculatePrice,
+  getFootOptions,
+  getHeightOptions,
+  variantsCollection,
+} from "../utils"
 import { FormCollectionType } from "../types"
 
 import { FormStands } from "./FormStands"
@@ -35,6 +40,7 @@ export const FormCollection = ({
   initialValues,
 }: Props) => {
   const fieldName = `collections.${collectionIndex}`
+  calculatePrice([collection])
 
   return (
     <Fragment key={collectionIndex}>
@@ -120,6 +126,12 @@ export const FormCollection = ({
         collectionIndex={collectionIndex}
         initialStand={initialValues.collections[0].stands[0]}
       />
+      <GridItem
+        collectionIndex={collectionIndex}
+        rowSpan={collection.stands.length}
+      >
+        <div>{calculatePrice([collection])}</div>
+      </GridItem>
     </Fragment>
   )
 }

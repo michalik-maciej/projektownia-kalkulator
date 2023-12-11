@@ -29,7 +29,11 @@ export const aggregateByBacks = ({
         numberOfStands *
         toInteger(backVariant)
 
-      order.push({ description: `${back.w} / ${back.h}`, number })
+      order.push({
+        description: `${back.w} / ${back.h}`,
+        number,
+        price: number * back.price,
+      })
       remainder = remainder % toNumber(back.h)
     }
   }
@@ -59,6 +63,7 @@ const aggregateByStands = ({
       (group) => ({
         description: group[0].description,
         number: sumBy("number", group) * numberOfCollections,
+        price: sumBy("price", group) * numberOfCollections,
       }),
       groupStands()
     )
@@ -78,6 +83,7 @@ const aggregateByCollections = (data: FormCollectionType[]): OrderType => {
       (group) => ({
         description: group[0].description,
         number: sumBy("number", group),
+        price: sumBy("price", group),
       }),
       groupCollections()
     )

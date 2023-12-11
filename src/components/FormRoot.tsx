@@ -1,10 +1,11 @@
-import { Button, IconButton, Grid, Tooltip } from "@chakra-ui/react"
+import { Button, IconButton, Grid, Tooltip, Text } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
 import { FieldArray } from "formik"
 import { GridItem } from "./GridItem"
 import { initialValues } from "../formInitialValues"
 import { FormCollectionType } from "../types"
 import { FormCollection } from "./FormCollection"
+import { calculatePrice } from "../utils"
 
 type Props = {
   collections: FormCollectionType[]
@@ -18,16 +19,20 @@ export const FormRoot = ({ collections }: Props) => {
             m="8"
             gap="0.5"
             templateRows="repeat(2, auto)"
-            templateColumns="repeat(6, auto)"
+            templateColumns="repeat(7, auto)"
             position="relative"
           >
             <GridItem rowSpan={2}>Ciąg</GridItem>
             <GridItem rowSpan={2}>Wysokość</GridItem>
             <GridItem rowSpan={2}>Stopa</GridItem>
             <GridItem colSpan={3}>Regał</GridItem>
+            <GridItem>Cena (zł)</GridItem>
             <GridItem>Ilość / Szerokość</GridItem>
             <GridItem>Półki</GridItem>
             <GridItem>Plecy</GridItem>
+            <GridItem>
+              <Text fontWeight="bold">{calculatePrice(collections)}</Text>
+            </GridItem>
             {collections.map((collection, collectionIndex) => (
               <FormCollection
                 collectionIndex={collectionIndex}

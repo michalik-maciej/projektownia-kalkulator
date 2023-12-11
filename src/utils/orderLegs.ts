@@ -14,11 +14,12 @@ export const orderLegs = (data: FormCollectionType[]): OrderType => {
   const heightGroups = groupBy("height", mappedData)
 
   return map((group) => {
-    const leg = legs.find(({ h }) => h === toString(group[0].height))
+    const [leg] = legs.filter(({ h }) => h === toString(group[0].height))
 
     return {
       description: `${leg?.h} / ${leg?.w} / ${leg?.d}`,
       number: sumBy("numberOfLegs", group),
+      price: sumBy("numberOfLegs", group) * leg.price,
     }
   }, heightGroups)
 }
