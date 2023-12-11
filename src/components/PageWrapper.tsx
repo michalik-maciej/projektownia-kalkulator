@@ -43,7 +43,7 @@ export const PageWrapper = ({ children }: Props) => {
         </HStack>
         <Switch onChange={toggleColorMode} />
       </Flex>
-      <Box mx="16" mb="32">
+      <Box px="16" m="auto" maxW="1400" mb="32">
         {children}
       </Box>
     </Box>

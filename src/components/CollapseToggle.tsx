@@ -12,8 +12,9 @@ export const CollapseToggle = ({ field }: FieldProps) => {
     <Box
       as="label"
       position="absolute"
-      top="0"
-      left="-40px"
+      top="12px"
+      transform="translate(-50%, -50%)"
+      left="-48px"
       w="24px"
       h="24px"
       className="collapse-visible"

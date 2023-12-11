@@ -22,7 +22,7 @@ export const GridItem = ({ collectionIndex, ...props }: Props) => {
       overflowY="clip"
       position="relative"
       maxH={isCollapsed ? 0 : "full"}
-      transition="all 0.3s"
+      transition="all 0.5s"
       h="100%"
       py="3"
       px="6"
@@ -31,7 +31,8 @@ export const GridItem = ({ collectionIndex, ...props }: Props) => {
       sx={{
         "& > :not(.collapse-visible)": {
           m: "auto",
-          visibility: isCollapsed ? "hidden" : "initial",
+          opacity: isCollapsed ? 0 : 1,
+          transition: "opacity 0.5s",
         },
       }}
       {...props}
