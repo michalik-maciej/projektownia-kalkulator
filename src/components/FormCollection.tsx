@@ -45,6 +45,7 @@ export const FormCollection = ({
   return (
     <Fragment key={collectionIndex}>
       <GridItem
+        colStart={1}
         rowSpan={collection.stands.length}
         collectionIndex={collectionIndex}
       >
@@ -110,6 +111,7 @@ export const FormCollection = ({
         </VStack>
       </GridItem>
       <GridItem
+        colStart={2}
         collectionIndex={collectionIndex}
         rowSpan={collection.stands.length}
       >
@@ -122,6 +124,7 @@ export const FormCollection = ({
         </Field>
       </GridItem>
       <GridItem
+        colStart={3}
         collectionIndex={collectionIndex}
         rowSpan={collection.stands.length}
       >
@@ -134,16 +137,11 @@ export const FormCollection = ({
         </Field>
       </GridItem>
       <FormStands
-        stands={collection.stands}
+        collection={collection}
         collectionIndex={collectionIndex}
         initialStand={initialValues.collections[0].stands[0]}
       />
-      <GridItem
-        collectionIndex={collectionIndex}
-        rowSpan={collection.stands.length}
-      >
-        <div>{calculatePrice([collection])}</div>
-      </GridItem>
+      <GridItem py="2" colStart={1} colSpan={7} visibility="hidden" />
     </Fragment>
   )
 }

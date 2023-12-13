@@ -3,21 +3,21 @@ import { VStack, IconButton, Select, HStack, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
-import { getWidthOptions, variantsBack } from "../utils"
-import { FormStandType } from "../types"
+import { calculatePrice, getWidthOptions, variantsBack } from "../utils"
+import { FormCollectionType, FormStandType } from "../types"
 
 import { GridItem } from "./GridItem"
 import { NumberInput } from "./NumberInput"
 import { FormShelves } from "./FormShelves"
 
 interface Props {
+  collection: FormCollectionType
   collectionIndex: number
-  stands: FormStandType[]
   initialStand: FormStandType
 }
 
 export const FormStands = ({
-  stands,
+  collection,
   collectionIndex,
   initialStand,
 }: Props) => {
@@ -27,9 +27,13 @@ export const FormStands = ({
       {({ push: pushStand, remove: removeStand }) => {
         return (
           <>
-            {stands.map((stand, standIndex) => (
+            {collection.stands.map((stand, standIndex) => (
               <>
-                <GridItem collectionIndex={collectionIndex} position="relative">
+                <GridItem
+                  collectionIndex={collectionIndex}
+                  colStart={4}
+                  position="relative"
+                >
                   <VStack>
                     <HStack gap="4">
                       <NumberInput
@@ -48,20 +52,22 @@ export const FormStands = ({
                       </Field>
                       <Tooltip
                         label="Usuń regał"
-                        {...(size(stands) === 1 && { visibility: "hidden" })}
+                        {...(size(collection.stands) === 1 && {
+                          visibility: "hidden",
+                        })}
                       >
                         <IconButton
                           icon={<DeleteIcon opacity="0.7" />}
                           borderRadius="full"
                           size="sm"
                           p="0"
-                          isDisabled={size(stands) === 1}
+                          isDisabled={size(collection.stands) === 1}
                           aria-label="remove stand"
                           onClick={() => removeStand(standIndex)}
                         />
                       </Tooltip>
                     </HStack>
-                    {size(stands) === standIndex + 1 && (
+                    {size(collection.stands) === standIndex + 1 && (
                       <Tooltip label="Dodaj regał">
                         <IconButton
                           icon={<AddIcon opacity="0.7" />}
@@ -77,7 +83,7 @@ export const FormStands = ({
                     )}
                   </VStack>
                 </GridItem>
-                <GridItem collectionIndex={collectionIndex}>
+                <GridItem collectionIndex={collectionIndex} colStart={5}>
                   <FormShelves
                     fieldName={`${fieldName}.stands.${standIndex}.shelves`}
                     initialShelf={initialStand.shelves[0]}
@@ -85,23 +91,32 @@ export const FormStands = ({
                     shelves={stand.shelves}
                   />
                 </GridItem>
-                <GridItem collectionIndex={collectionIndex} position="relative">
+                <GridItem
+                  collectionIndex={collectionIndex}
+                  position="relative"
+                  colStart={6}
+                >
                   <Field
                     name={`${fieldName}.stands.${standIndex}.backVariant`}
                     size="sm"
                     as={Select}
                   >
                     {variantsBack.map(({ value, name }) => (
-                      <option
-                        key={value}
-                        value={value}
-                        //  disabled={value === "euro"}
-                      >
+                      <option key={value} value={value}>
                         {name}
                       </option>
                     ))}
                   </Field>
                 </GridItem>
+                {standIndex === 0 && (
+                  <GridItem
+                    collectionIndex={collectionIndex}
+                    rowSpan={collection.stands.length}
+                    colStart={7}
+                  >
+                    <div>{calculatePrice([collection])}</div>
+                  </GridItem>
+                )}
               </>
             ))}
           </>
