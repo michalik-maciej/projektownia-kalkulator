@@ -22,7 +22,7 @@ export const calculatePrice = (data: FormCollectionType[]) => {
     .reduce((acc, curr) => acc + curr, 0)
 
   const formattedSum = new Intl.NumberFormat("pl", {
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
   }).format(totalSum)
 
   return formattedSum
