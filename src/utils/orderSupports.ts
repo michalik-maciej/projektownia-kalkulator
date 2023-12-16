@@ -1,17 +1,17 @@
-import { groupBy, map, flatMap, sumBy } from "lodash/fp"
+import { find, groupBy, map, sumBy } from "lodash/fp"
 
-import { FormCollectionType, FormStandType, OrderType } from "../types"
+import { FormCollectionType, FormStandType } from "../types"
 import { supports } from "../products"
+import { aggregateOrder } from "./aggregateOrder"
 
-export const orderSupports = (data: FormCollectionType[]): OrderType => {
+export const orderSupports = (data: FormCollectionType[]) => {
   const aggregateBySupports = ({ shelves, numberOfStands }: FormStandType) => {
     const groupSupports = groupBy("depth", shelves)
 
     const sumSupports = map((group) => {
       const number = 2 * sumBy("numberOfShelves", group) * numberOfStands
-      const [{ price: unitPrice }] = supports.filter(
-        ({ d }) => d === group[0].depth
-      )
+      const support = find(({ d }) => d === group[0].depth, supports)
+      const unitPrice = support ? support.price : 0
 
       return {
         description: group[0].depth,
@@ -23,47 +23,5 @@ export const orderSupports = (data: FormCollectionType[]): OrderType => {
     return sumSupports
   }
 
-  const aggregateByStands = ({
-    stands,
-    numberOfCollections,
-  }: FormCollectionType) => {
-    const groupStands = () =>
-      groupBy(
-        "description",
-        flatMap((stand) => aggregateBySupports(stand), stands)
-      )
-
-    const sumStands = map(
-      (group) => ({
-        description: group[0].description,
-        number: sumBy("number", group) * numberOfCollections,
-        price: sumBy("price", group) * numberOfCollections,
-      }),
-      groupStands()
-    )
-
-    return sumStands
-  }
-
-  const aggregateByCollections = () => {
-    const groupCollections = () =>
-      groupBy(
-        "description",
-        flatMap((collection) => aggregateByStands(collection), data)
-      )
-
-    const sumCollections = () =>
-      map(
-        (group) => ({
-          description: group[0].description,
-          number: sumBy("number", group),
-          price: sumBy("price", group),
-        }),
-        groupCollections()
-      )
-
-    return sumCollections()
-  }
-
-  return aggregateByCollections()
+  return aggregateOrder(data, aggregateBySupports)
 }

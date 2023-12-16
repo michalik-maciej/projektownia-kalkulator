@@ -1,27 +1,27 @@
 import { groupBy, map, sumBy } from "lodash/fp"
 
 import { feet } from "../products"
-import { FormCollectionType, OrderType } from "../types"
+import { FormCollectionType } from "../types"
 
-export const orderFeet = (data: FormCollectionType[]): OrderType => {
-  const mappedData = map(({ depth, numberOfCollections, stands }) => {
-    const [{ price: unitPrice }] = feet.filter(({ d }) => d === depth)
-    const number = (sumBy("numberOfStands", stands) + 1) * numberOfCollections
+export const orderFeet = (data: FormCollectionType[]) => {
+  // Create a Map for constant time lookup of feet prices
+  const feetPriceMap = new Map(feet.map(({ d, price }) => [d, price]))
 
-    return {
-      depth,
-      number,
-      price: number * unitPrice,
-    }
-  }, data)
-
-  const depthGroups = groupBy("depth", mappedData)
+  const depthGroups = groupBy("depth", data)
 
   return map((group) => {
+    const depth = group[0].depth
+    const unitPrice = feetPriceMap.get(depth) || 0
+    const number = sumBy(
+      ({ stands, numberOfCollections }) =>
+        (sumBy("numberOfStands", stands) + 1) * numberOfCollections,
+      group
+    )
+
     return {
-      description: group[0].depth,
-      number: sumBy("number", group),
-      price: sumBy("price", group),
+      description: depth,
+      number,
+      price: number * unitPrice,
     }
   }, depthGroups)
 }

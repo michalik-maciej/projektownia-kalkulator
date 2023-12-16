@@ -1,8 +1,8 @@
 import { groupBy, map, sumBy, toString } from "lodash/fp"
-import { FormCollectionType, OrderType } from "../types"
+import { FormCollectionType } from "../types"
 import { legs } from "../products"
 
-export const orderLegs = (data: FormCollectionType[]): OrderType => {
+export const orderLegs = (data: FormCollectionType[]) => {
   const mappedData = map(
     ({ stands, numberOfCollections, height }: FormCollectionType) => ({
       height,
