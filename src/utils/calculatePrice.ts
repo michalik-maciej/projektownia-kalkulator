@@ -7,11 +7,13 @@ import { orderBacks } from "./orderBacks"
 import { orderFeet } from "./orderFeet"
 import { orderSupports } from "./orderSupports"
 import { orderShelves } from "./orderShelves"
+import { orderBaseCovers } from "./orderBaseCovers"
 
 export const calculatePrice = (data: FormCollectionType[]) => {
   const orderFunctions: Array<(data: FormCollectionType[]) => OrderType> = [
     orderLegs,
     orderBacks,
+    orderBaseCovers,
     orderFeet,
     orderShelves,
     orderSupports,

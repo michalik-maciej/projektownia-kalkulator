@@ -25,6 +25,7 @@ import { FormCollectionType } from "../types"
 
 import { FormStands } from "./FormStands"
 import { NumberInput } from "./NumberInput"
+import { BaseCoverInput } from "./BaseCoverInput"
 import { CollapseToggle } from "./CollapseToggle"
 
 interface Props {
@@ -49,7 +50,7 @@ export const FormCollection = ({
         rowSpan={collection.stands.length}
         collectionIndex={collectionIndex}
       >
-        <Field as={CollapseToggle} name={`${fieldName}.isCollapsed`}>
+        <Field name={`${fieldName}.isCollapsed`}>
           {(field: FieldProps) => (
             <>
               <CollapseToggle {...field} />
@@ -106,6 +107,9 @@ export const FormCollection = ({
             ))}
           </HStack>
           <HStack gap="4">
+            <Field name={`${fieldName}.hasBaseCover`}>
+              {(field: FieldProps) => <BaseCoverInput {...field} />}
+            </Field>
             <NumberInput name={`${fieldName}.numberOfCollections`} />
           </HStack>
         </VStack>

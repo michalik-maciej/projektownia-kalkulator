@@ -41,7 +41,7 @@ export type FormStandType = {
 }
 
 export type FormCollectionType = {
-  cover?: boolean
+  hasBaseCover: boolean
   height: string
   depth: string
   isCollapsed?: boolean

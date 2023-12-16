@@ -16,6 +16,13 @@ export const shelves = [
   { d: "57", w: "125", price: 99.1 },
 ]
 
+export const baseCovers = [
+  { w: "66", price: 32 },
+  { w: "80", price: 36.13 },
+  { w: "100", price: 38.2 },
+  { w: "125", price: 41.29 },
+]
+
 export const legs = [
   { d: "3", h: "90", w: "8", price: 58.9 },
   { d: "3", h: "150", w: "8", price: 98.0 },

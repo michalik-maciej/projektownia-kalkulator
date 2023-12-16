@@ -22,12 +22,13 @@ const initialStands = {
 }
 
 const initialCollection: FormCollectionType = {
+  depth: getFootOptions()[2],
+  hasBaseCover: true,
+  height: getHeightOptions()[3],
   isCollapsed: false,
   numberOfCollections: 1,
-  height: getHeightOptions()[3],
-  depth: getFootOptions()[2],
-  variant: "P",
   stands: [initialStands],
+  variant: "P",
 }
 
 export const initialValues: { collections: FormCollectionType[] } = {

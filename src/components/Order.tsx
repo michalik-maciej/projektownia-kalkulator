@@ -3,6 +3,7 @@ import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
 
 import {
   orderBacks,
+  orderBaseCovers,
   orderFeet,
   orderLegs,
   orderShelves,
@@ -27,6 +28,10 @@ export const Order = ({ collections }: Props) => {
   const shelves = { name: "Półki", order: orderShelves(collections) }
   const supports = { name: "Wsporniki", order: orderSupports(collections) }
   const backs = { name: "Plecy", order: orderBacks(collections) }
+  const baseCovers = {
+    name: "Osłony dolne",
+    order: orderBaseCovers(collections),
+  }
 
   const renderSection = ({ name, order }: SectionProps) => (
     <>
@@ -53,7 +58,7 @@ export const Order = ({ collections }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {[legs, feet, shelves, supports, backs].map((category) =>
+        {[legs, feet, shelves, supports, backs, baseCovers].map((category) =>
           size(category.order) ? renderSection(category) : null
         )}
       </Tbody>
