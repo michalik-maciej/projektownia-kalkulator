@@ -1,6 +1,10 @@
 import { orderBy, toNumber, toInteger } from "lodash/fp"
 
-import { FormCollectionType, FormStandType } from "../types"
+import {
+  FormCollectionType,
+  FormSubCollectionType,
+  FormStandType,
+} from "../types"
 import { aggregateOrder } from "./aggregateOrder"
 import { getBacks } from "./getProducts"
 
@@ -10,7 +14,7 @@ export const orderBacks = (data: FormCollectionType[]) => {
     height,
     numberOfStands,
     width,
-  }: FormStandType & FormCollectionType) => {
+  }: FormStandType & FormSubCollectionType) => {
     if (backVariant === "0") {
       return []
     }

@@ -1,4 +1,5 @@
 export * from "./calculatePrice"
+export * from "./getCollectionStandsSize"
 export * from "./getFormOptions"
 export * from "./getProducts"
 export * from "./orderBacks"

@@ -3,8 +3,17 @@ import { VStack, IconButton, Select, HStack, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
-import { calculatePrice, getWidthOptions, variantsBack } from "../utils"
-import { FormCollectionType, FormStandType } from "../types"
+import {
+  calculatePrice,
+  getCollectionStandsSize,
+  getWidthOptions,
+  variantsBack,
+} from "../utils"
+import {
+  FormSubCollectionType,
+  FormStandType,
+  FormCollectionType,
+} from "../types"
 
 import { GridItem } from "./GridItem"
 import { NumberInput } from "./NumberInput"
@@ -13,21 +22,26 @@ import { FormShelves } from "./FormShelves"
 interface Props {
   collection: FormCollectionType
   collectionIndex: number
+  fieldName: string
   handleAdd: () => void
   handleRemove: (index: number) => void
   initialStand: FormStandType
   standIndex: number
+  subCollection: FormSubCollectionType
+  subCollectionIndex: number
 }
 
 export const FormStand = ({
   collection,
   collectionIndex,
+  fieldName,
   handleAdd,
   handleRemove,
   initialStand,
   standIndex,
+  subCollection,
+  subCollectionIndex,
 }: Props) => {
-  const fieldName = `collections.${collectionIndex}`
   return (
     <>
       <GridItem
@@ -37,14 +51,8 @@ export const FormStand = ({
       >
         <VStack>
           <HStack gap="4">
-            <NumberInput
-              name={`${fieldName}.stands.${standIndex}.numberOfStands`}
-            />
-            <Field
-              as={Select}
-              name={`${fieldName}.stands.${standIndex}.width`}
-              size="sm"
-            >
+            <NumberInput name={`${fieldName}.numberOfStands`} />
+            <Field as={Select} name={`${fieldName}.width`} size="sm">
               {getWidthOptions().map((width) => (
                 <option key={width} value={width}>
                   {width}
@@ -53,7 +61,7 @@ export const FormStand = ({
             </Field>
             <Tooltip
               label="Usuń regał"
-              {...(size(collection.stands) === 1 && {
+              {...(size(subCollection.stands) === 1 && {
                 visibility: "hidden",
               })}
             >
@@ -62,14 +70,14 @@ export const FormStand = ({
                 borderRadius="full"
                 size="sm"
                 p="0"
-                isDisabled={size(collection.stands) === 1}
+                isDisabled={size(subCollection.stands) === 1}
                 aria-label="remove stand"
                 // @ts-ignore
                 onClick={handleRemove}
               />
             </Tooltip>
           </HStack>
-          {size(collection.stands) === standIndex + 1 && (
+          {size(subCollection.stands) === standIndex + 1 && (
             <Tooltip label="Dodaj regał">
               <IconButton
                 icon={<AddIcon opacity="0.7" />}
@@ -87,10 +95,10 @@ export const FormStand = ({
       </GridItem>
       <GridItem collectionIndex={collectionIndex} colStart={5}>
         <FormShelves
-          fieldName={`${fieldName}.stands.${standIndex}.shelves`}
+          fieldName={`${fieldName}.shelves`}
           initialShelf={initialStand.shelves[0]}
-          width={collection.stands[standIndex].width}
-          shelves={collection.stands[standIndex].shelves}
+          width={subCollection.stands[standIndex].width}
+          shelves={subCollection.stands[standIndex].shelves}
         />
       </GridItem>
       <GridItem
@@ -98,11 +106,7 @@ export const FormStand = ({
         position="relative"
         colStart={6}
       >
-        <Field
-          name={`${fieldName}.stands.${standIndex}.backVariant`}
-          size="sm"
-          as={Select}
-        >
+        <Field name={`${fieldName}.backVariant`} size="sm" as={Select}>
           {variantsBack.map(({ value, name }) => (
             <option key={value} value={value}>
               {name}
@@ -110,10 +114,10 @@ export const FormStand = ({
           ))}
         </Field>
       </GridItem>
-      {standIndex === 0 && (
+      {subCollectionIndex === 0 && standIndex === 0 && (
         <GridItem
           collectionIndex={collectionIndex}
-          rowSpan={collection.stands.length}
+          rowSpan={getCollectionStandsSize(collection)}
           colStart={7}
         >
           <div>{calculatePrice([collection])}</div>

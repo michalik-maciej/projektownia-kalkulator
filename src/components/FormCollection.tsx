@@ -4,26 +4,20 @@ import {
   Radio,
   VStack,
   IconButton,
-  Select,
   HStack,
   Tooltip,
   Tag,
 } from "@chakra-ui/react"
 import { DeleteIcon } from "@chakra-ui/icons"
-import { GridItem } from "./GridItem"
 
 import { Gondola } from "../icons/Gondola"
 import { Przyscienny } from "../icons/Przyscienny"
 
-import {
-  calculatePrice,
-  getFootOptions,
-  getHeightOptions,
-  variantsCollection,
-} from "../utils"
+import { getCollectionStandsSize, variantsCollection } from "../utils"
 import { FormCollectionType } from "../types"
 
-import { FormStand } from "./FormStand"
+import { GridItem } from "./GridItem"
+import { FormSubCollection } from "./FormSubCollection"
 import { NumberInput } from "./NumberInput"
 import { BaseCoverInput } from "./BaseCoverInput"
 import { CollapseToggle } from "./CollapseToggle"
@@ -31,9 +25,10 @@ import { CollapseToggle } from "./CollapseToggle"
 interface Props {
   collectionIndex: number
   collection: FormCollectionType
-  initialValues: any
+  initialValues: { collections: FormCollectionType[] }
   handleRemove: (index: number) => void
 }
+
 export const FormCollection = ({
   collectionIndex,
   collection,
@@ -41,13 +36,12 @@ export const FormCollection = ({
   initialValues,
 }: Props) => {
   const fieldName = `collections.${collectionIndex}`
-  calculatePrice([collection])
 
   return (
     <Fragment key={collectionIndex}>
       <GridItem
         colStart={1}
-        rowSpan={collection.stands.length}
+        rowSpan={getCollectionStandsSize(collection)}
         collectionIndex={collectionIndex}
       >
         <Field name={`${fieldName}.isCollapsed`}>
@@ -114,49 +108,29 @@ export const FormCollection = ({
           </HStack>
         </VStack>
       </GridItem>
-      <GridItem
-        colStart={2}
-        collectionIndex={collectionIndex}
-        rowSpan={collection.stands.length}
-      >
-        <Field name={`${fieldName}.height`} as={Select} size="sm">
-          {getHeightOptions().map((height) => (
-            <option key={height} value={height}>
-              {height}
-            </option>
-          ))}
-        </Field>
-      </GridItem>
-      <GridItem
-        colStart={3}
-        collectionIndex={collectionIndex}
-        rowSpan={collection.stands.length}
-      >
-        <Field name={`${fieldName}.depth`} as={Select} size="sm">
-          {getFootOptions().map((depth) => (
-            <option key={depth} value={depth}>
-              {depth}
-            </option>
-          ))}
-        </Field>
-      </GridItem>
-      <FieldArray name={`${fieldName}.stands`}>
-        {({ push: pushStand, remove: removeStand }) => (
+      <FieldArray name={`${fieldName}.subCollections`}>
+        {({ push: pushSubCollection, remove: removeSubCollection }) => (
           <>
-            {collection.stands.map((_, standIndex) => {
-              const initialStand = initialValues.collections[0].stands[0]
-
-              return (
-                <FormStand
-                  collectionIndex={collectionIndex}
+            {collection.subCollections.map(
+              (subCollection, subCollectionIndex) => (
+                <FormSubCollection
                   collection={collection}
-                  handleAdd={() => pushStand(initialStand)}
-                  handleRemove={() => removeStand(standIndex)}
-                  initialStand={initialStand}
-                  standIndex={standIndex}
+                  collectionIndex={collectionIndex}
+                  fieldName={`${fieldName}.subCollections.${subCollectionIndex}`}
+                  handleAdd={() =>
+                    pushSubCollection(
+                      initialValues.collections[0].subCollections[0]
+                    )
+                  }
+                  handleRemove={() => removeSubCollection(subCollectionIndex)}
+                  initialStand={
+                    initialValues.collections[0].subCollections[0].stands[0]
+                  }
+                  subCollection={subCollection}
+                  subCollectionIndex={subCollectionIndex}
                 />
               )
-            })}
+            )}
           </>
         )}
       </FieldArray>

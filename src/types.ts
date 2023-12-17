@@ -40,14 +40,18 @@ export type FormStandType = {
   width: string
 }
 
-export type FormCollectionType = {
-  hasBaseCover: boolean
+export type FormSubCollectionType = {
   height: string
   depth: string
-  isCollapsed?: boolean
-  numberOfCollections: number
-  variant: (typeof variantsCollection)[number]
   stands: FormStandType[]
+}
+
+export type FormCollectionType = {
+  hasBaseCover: boolean
+  isCollapsed?: boolean
+  variant: (typeof variantsCollection)[number]
+  numberOfCollections: number
+  subCollections: FormSubCollectionType[]
 }
 
 export type OrderType = {
