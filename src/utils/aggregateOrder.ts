@@ -1,4 +1,4 @@
-import { groupBy, map, flatMap, sumBy } from "lodash/fp"
+import { groupBy, map, flatMap, sumBy, take } from "lodash/fp"
 
 import {
   FormCollectionType,
@@ -47,7 +47,10 @@ export const aggregateOrder = (
   const aggregateBySubCollections = (collection: FormCollectionType) =>
     flatMap(
       (subCollection) => aggregateByStands(collection, subCollection),
-      collection.subCollections
+      // workaround for aggregating data from only first sub collection of "P" variant
+      collection.variant === "P"
+        ? take(1, collection.subCollections)
+        : collection.subCollections
     )
 
   const groupCollections = () =>

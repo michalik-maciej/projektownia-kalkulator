@@ -1,7 +1,5 @@
 import { Field, FieldArray } from "formik"
-import { Select, Tooltip, IconButton } from "@chakra-ui/react"
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
-import { size } from "lodash/fp"
+import { Select } from "@chakra-ui/react"
 
 import {
   FormCollectionType,
@@ -17,8 +15,6 @@ interface Props {
   collection: FormCollectionType
   collectionIndex: number
   fieldName: string
-  handleAdd: () => void
-  handleRemove: (index: number) => void
   initialStand: FormStandType
   subCollection: FormSubCollectionType
   subCollectionIndex: number
@@ -28,8 +24,6 @@ export const FormSubCollection = ({
   collection,
   collectionIndex,
   fieldName,
-  handleAdd,
-  handleRemove,
   initialStand,
   subCollection,
   subCollectionIndex,
@@ -47,35 +41,6 @@ export const FormSubCollection = ({
             </option>
           ))}
         </Field>
-        <Tooltip
-          label="Usuń regał"
-          {...(size(subCollection.stands) === 1 && {
-            visibility: "hidden",
-          })}
-        >
-          <IconButton
-            icon={<DeleteIcon opacity="0.7" />}
-            borderRadius="full"
-            size="sm"
-            p="0"
-            isDisabled={size(subCollection.stands) === 1}
-            aria-label="remove stand"
-            // @ts-ignore
-            onClick={handleRemove}
-          />
-        </Tooltip>
-        <Tooltip label="Dodaj regał">
-          <IconButton
-            icon={<AddIcon opacity="0.7" />}
-            borderRadius="full"
-            px="5"
-            my="2"
-            size="xs"
-            aria-label="add stand"
-            type="button"
-            onClick={handleAdd}
-          />
-        </Tooltip>
       </GridItem>
       <GridItem
         collectionIndex={collectionIndex}

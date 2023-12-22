@@ -1,10 +1,16 @@
-import { flow, flatMap, get, size } from "lodash/fp"
+import { eq, flatMap, size, take } from "lodash/fp"
 
 import { FormCollectionType } from "../types"
 
-export const getCollectionStandsSize = (data: FormCollectionType) =>
-  flow(
-    get("subCollections"), // Get the subCollections property
-    flatMap("stands"), // Flatten all stands arrays into a single array
-    size // Get the size of the resulting array
-  )(data)
+export const getCollectionStandsSize = ({
+  subCollections,
+  variant,
+}: FormCollectionType) => {
+  const stands = flatMap(
+    "stands",
+    // workaround for spanning rows from only first sub collection of "P" variant
+    eq("P", variant) ? take(1, subCollections) : subCollections
+  )
+
+  return size(stands)
+}

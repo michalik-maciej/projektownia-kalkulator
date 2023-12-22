@@ -1,6 +1,7 @@
 import { Button, IconButton, Grid, Tooltip, Text } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
 import { FieldArray } from "formik"
+
 import { GridItem } from "./GridItem"
 import { initialValues } from "../formInitialValues"
 import { FormCollectionType } from "../types"

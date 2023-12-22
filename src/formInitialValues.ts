@@ -26,13 +26,11 @@ const initialCollection: FormCollectionType = {
   isCollapsed: false,
   numberOfCollections: 1,
   variant: "P",
-  subCollections: [
-    {
-      height: getHeightOptions()[3],
-      depth: getFootOptions()[2],
-      stands: [initialStands],
-    },
-  ],
+  subCollections: Array(2).fill({
+    height: getHeightOptions()[3],
+    depth: getFootOptions()[2],
+    stands: [initialStands],
+  }),
 }
 
 export const initialValues: { collections: FormCollectionType[] } = {
