@@ -107,11 +107,17 @@ export const FormStand = ({
         colStart={6}
       >
         <Field name={`${fieldName}.backVariant`} size="sm" as={Select}>
-          {variantsBack.map(({ value, name }) => (
-            <option key={value} value={value}>
-              {name}
-            </option>
-          ))}
+          {variantsBack.map(({ value, name }) => {
+            if (collection.variant !== "P" && value === "2") {
+              return null
+            }
+
+            return (
+              <option key={value} value={value}>
+                {name}
+              </option>
+            )
+          })}
         </Field>
       </GridItem>
       {subCollectionIndex === 0 && standIndex === 0 && (
