@@ -21,12 +21,12 @@ export const orderBacks = (data: FormCollectionType[]) => {
 
     const backs = orderBy(["h"], ["desc"], getBacks({ width }))
     const order = []
-    const BACK_OFFSET = 10
 
-    let remainder = toNumber(height)
+    const BACK_OFFSET = 10
+    let remainder = toNumber(height) - BACK_OFFSET
 
     for (const back of backs) {
-      if (remainder >= toNumber(back.h) + BACK_OFFSET) {
+      if (remainder >= toNumber(back.h)) {
         const number =
           Math.floor(remainder / toNumber(back.h)) *
           numberOfStands *
