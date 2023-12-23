@@ -55,7 +55,7 @@ export const FormCollection = ({
           </Tooltip>
         )}
         <VStack gap="6">
-          <HStack as={RadioGroup} defaultValue="P" gap="6">
+          <HStack as={RadioGroup} gap="6" value={collection.variant}>
             {variantsCollection.map((variant) => (
               <label key={variant}>
                 <HStack gap="1">
