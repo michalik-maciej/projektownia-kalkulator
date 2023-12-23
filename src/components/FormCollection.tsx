@@ -26,12 +26,14 @@ interface Props {
   collectionIndex: number
   collection: FormCollectionType
   initialValues: { collections: FormCollectionType[] }
+  handleAdd: (index: number, value: FormCollectionType) => void
   handleRemove: (index: number) => void
 }
 
 export const FormCollection = ({
   collectionIndex,
   collection,
+  handleAdd,
   handleRemove,
   initialValues,
 }: Props) => {
@@ -47,6 +49,7 @@ export const FormCollection = ({
         <CollectionControlMenu
           collectionIndex={collectionIndex}
           fieldName={fieldName}
+          handleAdd={handleAdd}
           handleRemove={handleRemove}
         />
         {collection.variant === "G" && (

@@ -1,5 +1,4 @@
-import { Button, IconButton, Grid, Tooltip, Text } from "@chakra-ui/react"
-import { AddIcon } from "@chakra-ui/icons"
+import { Button, Grid, Text } from "@chakra-ui/react"
 import { FieldArray } from "formik"
 
 import { GridItem } from "./GridItem"
@@ -14,7 +13,7 @@ type Props = {
 export const FormRoot = ({ collections }: Props) => {
   return (
     <FieldArray name="collections">
-      {({ push: pushCollection, remove: removeCollection }) => (
+      {({ remove: removeCollection, insert: insertCollection }) => (
         <>
           <Grid
             m="8"
@@ -43,24 +42,10 @@ export const FormRoot = ({ collections }: Props) => {
                 collectionIndex={collectionIndex}
                 collection={collection}
                 initialValues={initialValues}
+                handleAdd={() => insertCollection(collectionIndex, collection)}
                 handleRemove={() => removeCollection(collectionIndex)}
               />
             ))}
-            <Tooltip label="Dodaj ciąg">
-              <IconButton
-                icon={<AddIcon opacity="0.7" />}
-                px="8"
-                py="4"
-                borderRadius="full"
-                position="absolute"
-                size="sm"
-                aria-label="add collection"
-                bottom="-80px"
-                left="50%"
-                transform="translate(-50%, -50%)"
-                onClick={() => pushCollection(initialValues.collections[0])}
-              />
-            </Tooltip>
           </Grid>
           <Button mx="8" mt="20" type="submit">
             Submit
