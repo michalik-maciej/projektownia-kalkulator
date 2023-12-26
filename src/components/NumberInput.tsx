@@ -19,7 +19,7 @@ export const NumberInput = ({ name, isDisabled, ...rest }: Props) => (
     {({ field, form }: FieldProps) => (
       <ChakraNumberInput
         min={1}
-        max={10}
+        max={99}
         isDisabled={isDisabled}
         maxW="60px"
         value={field.value}

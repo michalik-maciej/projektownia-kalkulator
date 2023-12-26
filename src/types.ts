@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react"
 import { variantsCollection } from "./utils"
 
 interface Price {
@@ -49,6 +50,8 @@ export type FormSubCollectionType = {
 export type FormCollectionType = {
   height: string
   isCollapsed?: boolean
+  // flag to edit both sub collections at once or separately
+  isEditLocked?: boolean
   variant: (typeof variantsCollection)[number]
   numberOfCollections: number
   subCollections: FormSubCollectionType[]
@@ -59,3 +62,8 @@ export type OrderType = {
   number: number
   price: number
 }[]
+
+export type HandleLockedChange = (
+  event: ChangeEvent<HTMLInputElement>,
+  fieldName: string
+) => void

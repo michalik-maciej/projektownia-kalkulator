@@ -13,11 +13,13 @@ import {
   FormSubCollectionType,
   FormStandType,
   FormCollectionType,
+  HandleLockedChange,
 } from "../types"
 
 import { GridItem } from "./GridItem"
 import { NumberInput } from "./NumberInput"
 import { FormShelves } from "./FormShelves"
+import { ChangeEvent } from "react"
 
 interface Props {
   collection: FormCollectionType
@@ -25,6 +27,7 @@ interface Props {
   fieldName: string
   handleAdd: () => void
   handleRemove: (index: number) => void
+  handleLockedChange: HandleLockedChange
   initialStand: FormStandType
   standIndex: number
   subCollection: FormSubCollectionType
@@ -37,6 +40,7 @@ export const FormStand = ({
   fieldName,
   handleAdd,
   handleRemove,
+  handleLockedChange,
   initialStand,
   standIndex,
   subCollection,
@@ -51,8 +55,27 @@ export const FormStand = ({
       >
         <VStack>
           <HStack gap="4">
-            <NumberInput name={`${fieldName}.numberOfStands`} />
-            <Field as={Select} name={`${fieldName}.width`} size="sm">
+            {/* @ts-ignore */}
+            <NumberInput
+              name={`${fieldName}.numberOfStands`}
+              {...(collection.isEditLocked && {
+                onChange: (event: ChangeEvent<HTMLInputElement>) =>
+                  handleLockedChange(
+                    event,
+                    `stands.${standIndex}.numberOfStands`
+                  ),
+              })}
+            />
+            <Field
+              as={Select}
+              name={`${fieldName}.width`}
+              size="sm"
+              {...(collection.isEditLocked && {
+                onChange: (event: ChangeEvent<HTMLInputElement>) =>
+                  handleLockedChange(event, `stands.${standIndex}.width`),
+                isDisabled: subCollectionIndex > 0,
+              })}
+            >
               {getWidthOptions().map((width) => (
                 <option key={width} value={width}>
                   {width}
@@ -70,7 +93,10 @@ export const FormStand = ({
                 borderRadius="full"
                 size="sm"
                 p="0"
-                isDisabled={size(subCollection.stands) === 1}
+                isDisabled={
+                  size(subCollection.stands) === 1 ||
+                  (collection.isEditLocked && subCollectionIndex > 0)
+                }
                 aria-label="remove stand"
                 // @ts-ignore
                 onClick={handleRemove}
@@ -80,14 +106,17 @@ export const FormStand = ({
           {size(subCollection.stands) === standIndex + 1 && (
             <Tooltip label="Dodaj regał">
               <IconButton
-                icon={<AddIcon opacity="0.7" />}
-                borderRadius="full"
-                px="5"
-                my="2"
-                size="xs"
                 aria-label="add stand"
-                type="button"
+                borderRadius="full"
+                icon={<AddIcon opacity="0.7" />}
+                my="2"
                 onClick={handleAdd}
+                px="5"
+                size="xs"
+                type="button"
+                {...(collection.isEditLocked && {
+                  isDisabled: subCollectionIndex > 0,
+                })}
               />
             </Tooltip>
           )}
@@ -95,7 +124,11 @@ export const FormStand = ({
       </GridItem>
       <GridItem collectionIndex={collectionIndex} colStart={6}>
         <FormShelves
+          collection={collection}
+          standIndex={standIndex}
+          subCollectionIndex={subCollectionIndex}
           fieldName={`${fieldName}.shelves`}
+          handleLockedChange={handleLockedChange}
           initialShelf={initialStand.shelves[0]}
           width={subCollection.stands[standIndex].width}
           shelves={subCollection.stands[standIndex].shelves}
@@ -106,7 +139,16 @@ export const FormStand = ({
         position="relative"
         colStart={7}
       >
-        <Field name={`${fieldName}.backVariant`} size="sm" as={Select}>
+        <Field
+          name={`${fieldName}.backVariant`}
+          size="sm"
+          as={Select}
+          {...(collection.isEditLocked && {
+            onChange: (event: ChangeEvent<HTMLInputElement>) =>
+              handleLockedChange(event, `stands.${standIndex}.backVariant`),
+            isDisabled: subCollectionIndex > 0,
+          })}
+        >
           {variantsBack.map(({ value, name }) => {
             if (collection.variant !== "P" && value === "2") {
               return null

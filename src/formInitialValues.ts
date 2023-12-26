@@ -23,6 +23,7 @@ const initialStands = {
 
 const initialCollection: FormCollectionType = {
   isCollapsed: false,
+  isEditLocked: false,
   height: getHeightOptions()[3],
   numberOfCollections: 1,
   variant: "P",

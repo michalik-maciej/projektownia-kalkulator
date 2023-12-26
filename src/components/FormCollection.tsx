@@ -98,6 +98,7 @@ export const FormCollection = ({
           const subCollections = eq("P", collection.variant)
             ? take(1, collection.subCollections)
             : collection.subCollections
+
           return (
             <>
               {subCollections.map((subCollection, subCollectionIndex) => (

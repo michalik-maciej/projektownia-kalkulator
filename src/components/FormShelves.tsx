@@ -1,21 +1,31 @@
+import { ChangeEvent } from "react"
 import { Field, FieldArray } from "formik"
 import { Flex, VStack, IconButton, Select, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
+
 import { NumberInput } from "./NumberInput"
 import { getShelfOptions } from "../utils"
-import { FormShelfType } from "../types"
+import { FormCollectionType, FormShelfType, HandleLockedChange } from "../types"
 
 interface Props {
+  collection: FormCollectionType
   fieldName: string
+  handleLockedChange: HandleLockedChange
   initialShelf: FormShelfType
   shelves: FormShelfType[]
+  standIndex: number
+  subCollectionIndex: number
   width: string
 }
 
 export const FormShelves = ({
+  collection,
   fieldName,
+  handleLockedChange,
   initialShelf,
   shelves,
+  standIndex,
+  subCollectionIndex,
   width,
 }: Props) => {
   return (
@@ -36,6 +46,14 @@ export const FormShelves = ({
                 as={Select}
                 size="sm"
                 name={`${fieldName}.${shelfIndex}.depth`}
+                {...(collection.isEditLocked && {
+                  onChange: (event: ChangeEvent<HTMLInputElement>) =>
+                    handleLockedChange(
+                      event,
+                      `stands.${standIndex}.shelves.${shelfIndex}.depth`
+                    ),
+                  isDisabled: subCollectionIndex > 0,
+                })}
               >
                 {getShelfOptions(width).map((depth) => (
                   <option key={depth} value={depth}>
@@ -50,6 +68,9 @@ export const FormShelves = ({
                   size="sm"
                   aria-label="remove shelves"
                   onClick={() => removeShelf(shelfIndex)}
+                  {...(collection.isEditLocked && {
+                    isDisabled: subCollectionIndex > 0,
+                  })}
                 />
               </Tooltip>
             </Flex>
@@ -64,6 +85,9 @@ export const FormShelves = ({
               aria-label="add shelves"
               type="button"
               onClick={() => pushShelf(initialShelf)}
+              {...(collection.isEditLocked && {
+                isDisabled: subCollectionIndex > 0,
+              })}
             />
           </Tooltip>
         </VStack>
