@@ -1,7 +1,11 @@
 import { find } from "lodash/fp"
 
 import { baseCovers } from "../products"
-import { FormCollectionType, FormStandType } from "../types"
+import {
+  FormCollectionType,
+  FormSubCollectionType,
+  FormStandType,
+} from "../types"
 import { aggregateOrder } from "./aggregateOrder"
 
 export const orderBaseCovers = (data: FormCollectionType[]) => {
@@ -9,7 +13,7 @@ export const orderBaseCovers = (data: FormCollectionType[]) => {
     hasBaseCover,
     numberOfStands,
     width,
-  }: FormCollectionType & FormStandType) => {
+  }: FormSubCollectionType & FormStandType) => {
     if (!hasBaseCover) {
       return []
     }

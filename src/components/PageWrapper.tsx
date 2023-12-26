@@ -20,15 +20,16 @@ export const PageWrapper = ({ children }: Props) => {
   return (
     <Box pt="20" minH="100vh">
       <Flex
-        position="fixed"
-        zIndex={1}
-        insetX="0"
-        top="0"
-        py="4"
-        px="16"
         align="center"
+        bgColor="#313334"
+        borderBottom="1px solid black"
+        insetX="0"
         justify="space-between"
-        borderBottom="2px solid black"
+        position="fixed"
+        px="16"
+        py="4"
+        top="0"
+        zIndex={1}
       >
         <HStack spacing="8">
           <Button as={Link} to="/form">

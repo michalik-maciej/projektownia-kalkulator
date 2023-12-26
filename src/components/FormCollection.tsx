@@ -1,25 +1,22 @@
 import { Fragment } from "react"
-import { eq, take } from "lodash/fp"
-import { Field, FieldArray, FieldProps } from "formik"
-import {
-  Radio,
-  VStack,
-  HStack,
-  RadioGroup,
-  Switch,
-  Tooltip,
-} from "@chakra-ui/react"
+import { eq, get, take } from "lodash/fp"
+import { Field, FieldArray } from "formik"
+import { Radio, VStack, HStack, RadioGroup, Select } from "@chakra-ui/react"
 
 import { Gondola } from "../icons/Gondola"
+import { Impuls } from "../icons/Impuls"
 import { Przyscienny } from "../icons/Przyscienny"
 
-import { getCollectionStandsSize, variantsCollection } from "../utils"
+import {
+  getCollectionStandsSize,
+  getHeightOptions,
+  variantsCollection,
+} from "../utils"
 import { FormCollectionType } from "../types"
 
 import { GridItem } from "./GridItem"
 import { FormSubCollection } from "./FormSubCollection"
 import { NumberInput } from "./NumberInput"
-import { BaseCoverInput } from "./BaseCoverInput"
 import { CollectionControlMenu } from "./CollectionControlMenu"
 
 interface Props {
@@ -42,9 +39,10 @@ export const FormCollection = ({
   return (
     <Fragment key={collectionIndex}>
       <GridItem
+        alignItems="flex-start"
+        collectionIndex={collectionIndex}
         colStart={1}
         rowSpan={getCollectionStandsSize(collection)}
-        collectionIndex={collectionIndex}
       >
         <CollectionControlMenu
           collectionIndex={collectionIndex}
@@ -52,34 +50,48 @@ export const FormCollection = ({
           handleAdd={handleAdd}
           handleRemove={handleRemove}
         />
-        {collection.variant === "G" && (
-          <Tooltip label="Rozne strony">
-            <Switch size="sm" display="none" />
-          </Tooltip>
-        )}
-        <VStack gap="6">
-          <HStack as={RadioGroup} gap="6" value={collection.variant}>
+        <VStack gap="6" m="2">
+          <VStack
+            as={RadioGroup}
+            gap="6"
+            value={collection.variant}
+            alignItems="flex-end"
+          >
             {variantsCollection.map((variant) => (
               <label key={variant}>
-                <HStack gap="1">
-                  {variant === "G" ? <Gondola /> : <Przyscienny />}
+                <HStack>
+                  {get(variant, {
+                    P: <Przyscienny />,
+                    G: <Gondola />,
+                    I: <Impuls />,
+                  })}
                   <Field
                     as={Radio}
                     key={variant}
                     name={`${fieldName}.variant`}
                     value={variant}
+                    isDisabled={variant === "I"}
                   />
                 </HStack>
               </label>
             ))}
-          </HStack>
+          </VStack>
           <HStack gap="4">
-            <Field name={`${fieldName}.hasBaseCover`}>
-              {(field: FieldProps) => <BaseCoverInput {...field} />}
-            </Field>
             <NumberInput name={`${fieldName}.numberOfCollections`} />
           </HStack>
         </VStack>
+      </GridItem>
+      <GridItem
+        collectionIndex={collectionIndex}
+        rowSpan={getCollectionStandsSize(collection)}
+      >
+        <Field name={`${fieldName}.height`} as={Select} size="sm">
+          {getHeightOptions().map((height) => (
+            <option key={height} value={height}>
+              {height}
+            </option>
+          ))}
+        </Field>
       </GridItem>
       <FieldArray name={`${fieldName}.subCollections`}>
         {() => {

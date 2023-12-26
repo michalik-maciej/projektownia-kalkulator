@@ -10,7 +10,7 @@ export const variantsBack = [
   { value: "2", name: "2" },
 ] as const
 
-export const variantsCollection = ["P", "G"] as const
+export const variantsCollection = ["P", "G", "I"] as const
 
 export const getFootOptions = () => map("d", feet)
 

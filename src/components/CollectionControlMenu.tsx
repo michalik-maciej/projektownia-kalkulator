@@ -55,6 +55,7 @@ export const CollectionControlMenu = ({
         </Tooltip>
         <Tooltip label="Usuń ciąg">
           <IconButton
+            isDisabled={!collectionIndex}
             position="absolute"
             icon={<DeleteIcon opacity="0.7" />}
             borderRadius="full"

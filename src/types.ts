@@ -41,13 +41,13 @@ export type FormStandType = {
 }
 
 export type FormSubCollectionType = {
-  height: string
   depth: string
+  hasBaseCover: boolean
   stands: FormStandType[]
 }
 
 export type FormCollectionType = {
-  hasBaseCover: boolean
+  height: string
   isCollapsed?: boolean
   variant: (typeof variantsCollection)[number]
   numberOfCollections: number

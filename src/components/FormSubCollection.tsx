@@ -1,12 +1,12 @@
 import { Field, FieldArray } from "formik"
-import { Select } from "@chakra-ui/react"
+import { Checkbox, Select } from "@chakra-ui/react"
 
 import {
   FormCollectionType,
   FormStandType,
   FormSubCollectionType,
 } from "../types"
-import { getFootOptions, getHeightOptions } from "../utils"
+import { getFootOptions } from "../utils"
 
 import { GridItem } from "./GridItem"
 import { FormStand } from "./FormStand"
@@ -34,10 +34,10 @@ export const FormSubCollection = ({
         collectionIndex={collectionIndex}
         rowSpan={subCollection.stands.length}
       >
-        <Field name={`${fieldName}.height`} as={Select}>
-          {getHeightOptions().map((height) => (
-            <option key={height} value={height}>
-              {height}
+        <Field name={`${fieldName}.depth`} as={Select} size="sm">
+          {getFootOptions().map((depth) => (
+            <option key={depth} value={depth}>
+              {depth}
             </option>
           ))}
         </Field>
@@ -45,14 +45,13 @@ export const FormSubCollection = ({
       <GridItem
         collectionIndex={collectionIndex}
         rowSpan={subCollection.stands.length}
+        colStart={4}
       >
-        <Field name={`${fieldName}.depth`} as={Select}>
-          {getFootOptions().map((depth) => (
-            <option key={depth} value={depth}>
-              {depth}
-            </option>
-          ))}
-        </Field>
+        <Field
+          name={`${fieldName}.hasBaseCover`}
+          as={Checkbox}
+          defaultChecked
+        />
       </GridItem>
       <FieldArray name={`${fieldName}.stands`}>
         {({ push: pushStand, remove: removeStand }) => (

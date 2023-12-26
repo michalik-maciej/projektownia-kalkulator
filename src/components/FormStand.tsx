@@ -46,7 +46,7 @@ export const FormStand = ({
     <>
       <GridItem
         collectionIndex={collectionIndex}
-        colStart={4}
+        colStart={5}
         position="relative"
       >
         <VStack>
@@ -93,7 +93,7 @@ export const FormStand = ({
           )}
         </VStack>
       </GridItem>
-      <GridItem collectionIndex={collectionIndex} colStart={5}>
+      <GridItem collectionIndex={collectionIndex} colStart={6}>
         <FormShelves
           fieldName={`${fieldName}.shelves`}
           initialShelf={initialStand.shelves[0]}
@@ -104,7 +104,7 @@ export const FormStand = ({
       <GridItem
         collectionIndex={collectionIndex}
         position="relative"
-        colStart={6}
+        colStart={7}
       >
         <Field name={`${fieldName}.backVariant`} size="sm" as={Select}>
           {variantsBack.map(({ value, name }) => {
@@ -124,7 +124,7 @@ export const FormStand = ({
         <GridItem
           collectionIndex={collectionIndex}
           rowSpan={getCollectionStandsSize(collection)}
-          colStart={7}
+          colStart={8}
         >
           <div>{calculatePrice([collection])}</div>
         </GridItem>

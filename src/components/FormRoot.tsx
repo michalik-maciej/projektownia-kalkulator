@@ -19,22 +19,23 @@ export const FormRoot = ({ collections }: Props) => {
             m="8"
             gap="0.5"
             templateRows="repeat(2, auto)"
-            templateColumns="repeat(7, auto)"
+            templateColumns="repeat(8, auto)"
             position="relative"
           >
             <GridItem rowSpan={2}>Ciąg</GridItem>
             <GridItem rowSpan={2}>Wysokość</GridItem>
             <GridItem rowSpan={2}>Stopa</GridItem>
-            <GridItem colStart={4} colSpan={3}>
+            <GridItem rowSpan={2}>Osłona</GridItem>
+            <GridItem colStart={5} colSpan={3}>
               Regał
             </GridItem>
-            <GridItem colStart={4}>Ilość / Szerokość</GridItem>
-            <GridItem colStart={5}>Półki</GridItem>
-            <GridItem colStart={6}>Plecy</GridItem>
-            <GridItem rowStart={1} colStart={7}>
+            <GridItem colStart={5}>Ilość / Szerokość</GridItem>
+            <GridItem colStart={6}>Półki</GridItem>
+            <GridItem colStart={7}>Plecy</GridItem>
+            <GridItem rowStart={1} colStart={8}>
               Cena (zł)
             </GridItem>
-            <GridItem colStart={7}>
+            <GridItem colStart={8}>
               <Text fontWeight="bold">{calculatePrice(collections)}</Text>
             </GridItem>
             {collections.map((collection, collectionIndex) => (
