@@ -1,11 +1,11 @@
 import { groupBy, map, sumBy, isEqual } from "lodash/fp"
 
-import { shelves as products } from "../products"
+import { shelves as products } from "../../products"
 import {
   FormCollectionType,
   FormStandType,
   FormSubCollectionType,
-} from "../types"
+} from "../../types"
 import { aggregateOrder } from "./aggregateOrder"
 
 export const orderShelves = (data: FormCollectionType[]) => {
@@ -47,5 +47,8 @@ export const orderShelves = (data: FormCollectionType[]) => {
     return sumShelves
   }
 
-  return aggregateOrder(data, aggregateByShelves)
+  return {
+    productCategory: "Półki",
+    orderDetails: aggregateOrder(data, aggregateByShelves),
+  }
 }

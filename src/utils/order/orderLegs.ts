@@ -4,8 +4,8 @@ import {
   FormCollectionType,
   FormSubCollectionType,
   FormStandType,
-} from "../types"
-import { legs } from "../products"
+} from "../../types"
+import { legs } from "../../products"
 import { aggregateOrder } from "./aggregateOrder"
 
 export const orderLegs = (data: FormCollectionType[]) => {
@@ -26,5 +26,8 @@ export const orderLegs = (data: FormCollectionType[]) => {
       },
     ]
   }
-  return aggregateOrder(data, aggregateByLegs)
+  return {
+    productCategory: "Profile",
+    orderDetails: aggregateOrder(data, aggregateByLegs),
+  }
 }

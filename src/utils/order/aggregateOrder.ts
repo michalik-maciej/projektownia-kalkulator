@@ -5,14 +5,14 @@ import {
   FormStandType,
   FormSubCollectionType,
   OrderType,
-} from "../types"
+} from "../../types"
 
 export const aggregateOrder = (
   data: FormCollectionType[],
   aggregateFn: (
     Arg: FormCollectionType & FormSubCollectionType & FormStandType
-  ) => OrderType
-): OrderType => {
+  ) => OrderType["orderDetails"]
+): OrderType["orderDetails"] => {
   const aggregateByStands = (
     collection: FormCollectionType,
     subCollection: FormSubCollectionType

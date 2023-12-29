@@ -1,8 +1,8 @@
 import { orderBy, toNumber, toInteger } from "lodash/fp"
 
-import { FormCollectionType, FormStandType } from "../types"
+import { FormCollectionType, FormStandType } from "../../types"
+import { getBacks } from "../getProducts"
 import { aggregateOrder } from "./aggregateOrder"
-import { getBacks } from "./getProducts"
 
 export const orderBacks = (data: FormCollectionType[]) => {
   const aggregateByBacks = ({
@@ -39,5 +39,8 @@ export const orderBacks = (data: FormCollectionType[]) => {
     return order
   }
 
-  return aggregateOrder(data, aggregateByBacks)
+  return {
+    productCategory: "Plecy",
+    orderDetails: aggregateOrder(data, aggregateByBacks),
+  }
 }

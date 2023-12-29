@@ -1,11 +1,11 @@
 import { find } from "lodash/fp"
 
-import { baseCovers } from "../products"
+import { baseCovers } from "../../products"
 import {
   FormCollectionType,
   FormSubCollectionType,
   FormStandType,
-} from "../types"
+} from "../../types"
 import { aggregateOrder } from "./aggregateOrder"
 
 export const orderBaseCovers = (data: FormCollectionType[]) => {
@@ -33,5 +33,8 @@ export const orderBaseCovers = (data: FormCollectionType[]) => {
     ]
   }
 
-  return aggregateOrder(data, aggregateByBaseCovers)
+  return {
+    productCategory: "Osłony",
+    orderDetails: aggregateOrder(data, aggregateByBaseCovers),
+  }
 }

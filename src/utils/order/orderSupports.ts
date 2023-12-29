@@ -1,7 +1,7 @@
 import { find, groupBy, map, sumBy } from "lodash/fp"
 
-import { FormCollectionType, FormStandType } from "../types"
-import { supports } from "../products"
+import { FormCollectionType, FormStandType } from "../../types"
+import { supports } from "../../products"
 import { aggregateOrder } from "./aggregateOrder"
 
 export const orderSupports = (data: FormCollectionType[]) => {
@@ -23,5 +23,8 @@ export const orderSupports = (data: FormCollectionType[]) => {
     return sumSupports
   }
 
-  return aggregateOrder(data, aggregateBySupports)
+  return {
+    productCategory: "Wsporniki",
+    orderDetails: aggregateOrder(data, aggregateBySupports),
+  }
 }

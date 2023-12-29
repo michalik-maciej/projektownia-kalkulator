@@ -41,10 +41,13 @@ export type FormCollectionType = {
 }
 
 export type OrderType = {
-  description: string
-  number: number
-  price: number
-}[]
+  productCategory: string
+  orderDetails: {
+    description: string
+    number: number
+    price: number
+  }[]
+}
 
 export type HandleLockedChange = (
   event: ChangeEvent<HTMLInputElement>,

@@ -1,46 +1,26 @@
 import { size } from "lodash/fp"
 import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
 
-import {
-  orderBacks,
-  orderBaseCovers,
-  orderFeet,
-  orderLegs,
-  orderShelves,
-  orderSupports,
-} from "../utils"
-import { FormCollectionType } from "../types"
+import { useOrder } from "../hooks/useOrder"
+import { FormCollectionType, OrderType } from "../types"
 
 type Props = {
   collections: FormCollectionType[]
 }
 
-type SectionProps = {
-  name: string
-  order: { description: string; number: number }[]
-}
-
 export const Order = ({ collections }: Props) => {
+  const order = useOrder()
+
   if (!size(collections)) return <div>Brak ciągów</div>
 
-  const legs = { name: "Profile", order: orderLegs(collections) }
-  const feet = { name: "Stopy", order: orderFeet(collections) }
-  const shelves = { name: "Półki", order: orderShelves(collections) }
-  const supports = { name: "Wsporniki", order: orderSupports(collections) }
-  const backs = { name: "Plecy", order: orderBacks(collections) }
-  const baseCovers = {
-    name: "Osłony dolne",
-    order: orderBaseCovers(collections),
-  }
-
-  const renderSection = ({ name, order }: SectionProps) => (
+  const renderSection = ({ productCategory, orderDetails }: OrderType) => (
     <>
       <Tr>
         <Td pl={2} colSpan={2} fontWeight={600}>
-          {name}
+          {productCategory}
         </Td>
       </Tr>
-      {order.map(({ description, number }, index) => (
+      {orderDetails.map(({ description, number }, index) => (
         <Tr key={index}>
           <Td>{description}</Td>
           <Td>{number}</Td>
@@ -58,8 +38,8 @@ export const Order = ({ collections }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {[legs, feet, shelves, supports, backs, baseCovers].map((category) =>
-          size(category.order) ? renderSection(category) : null
+        {order.map((category) =>
+          size(category.orderDetails) ? renderSection(category) : null
         )}
       </Tbody>
     </Table>

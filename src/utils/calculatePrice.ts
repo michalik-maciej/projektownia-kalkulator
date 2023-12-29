@@ -2,12 +2,14 @@ import { sumBy } from "lodash/fp"
 
 import { FormCollectionType, OrderType } from "../types"
 
-import { orderLegs } from "./orderLegs"
-import { orderBacks } from "./orderBacks"
-import { orderFeet } from "./orderFeet"
-import { orderSupports } from "./orderSupports"
-import { orderShelves } from "./orderShelves"
-import { orderBaseCovers } from "./orderBaseCovers"
+import {
+  orderBacks,
+  orderBaseCovers,
+  orderFeet,
+  orderLegs,
+  orderShelves,
+  orderSupports,
+} from "../utils"
 
 export const calculatePrice = (data: FormCollectionType[]) => {
   const orderFunctions: Array<(data: FormCollectionType[]) => OrderType> = [
@@ -20,7 +22,7 @@ export const calculatePrice = (data: FormCollectionType[]) => {
   ]
 
   const totalSum = orderFunctions
-    .map((func) => sumBy("price", func(data)))
+    .map((func) => sumBy("price", func(data).orderDetails))
     .reduce((acc, curr) => acc + curr, 0)
 
   const formattedSum = new Intl.NumberFormat("pl", {
