@@ -3,13 +3,13 @@ import { has } from "lodash/fp"
 import { Field, FieldArray, useFormikContext, FieldProps } from "formik"
 import { Box, Checkbox, Select } from "@chakra-ui/react"
 
+import { useFormOptions } from "../hooks/useFormOptions"
 import {
   FormCollectionType,
   FormStandType,
   FormSubCollectionType,
   HandleLockedChange,
 } from "../types"
-import { getFootOptions } from "../utils"
 
 import { GridItem } from "./GridItem"
 import { FormStand } from "./FormStand"
@@ -36,6 +36,8 @@ export const FormSubCollection = ({
   const { setFieldValue } = useFormikContext<{
     collections: FormCollectionType[]
   }>()
+
+  const { footOptions } = useFormOptions()
 
   // handler used for parallel editing of all
   // sub collections in locked edit mode
@@ -89,7 +91,7 @@ export const FormSubCollection = ({
             isDisabled: subCollectionIndex > 0,
           })}
         >
-          {getFootOptions().map((depth) => (
+          {footOptions.map((depth) => (
             <option key={depth} value={depth}>
               {depth}
             </option>

@@ -6,12 +6,8 @@ import { Radio, VStack, HStack, RadioGroup, Select } from "@chakra-ui/react"
 import { Gondola } from "../icons/Gondola"
 import { Impuls } from "../icons/Impuls"
 import { Przyscienny } from "../icons/Przyscienny"
-
-import {
-  getCollectionStandsSize,
-  getHeightOptions,
-  variantsCollection,
-} from "../utils"
+import { useFormOptions } from "../hooks/useFormOptions"
+import { getCollectionStandsSize } from "../utils"
 import { FormCollectionType } from "../types"
 
 import { GridItem } from "./GridItem"
@@ -34,6 +30,7 @@ export const FormCollection = ({
   handleRemove,
   initialValues,
 }: Props) => {
+  const { collectionOptions, heightOptions } = useFormOptions()
   const fieldName = `collections.${collectionIndex}`
 
   return (
@@ -57,7 +54,7 @@ export const FormCollection = ({
             value={collection.variant}
             alignItems="flex-end"
           >
-            {variantsCollection.map((variant) => (
+            {collectionOptions.map((variant) => (
               <label key={variant}>
                 <HStack>
                   {get(variant, {
@@ -86,7 +83,7 @@ export const FormCollection = ({
         rowSpan={getCollectionStandsSize(collection)}
       >
         <Field name={`${fieldName}.height`} as={Select} size="sm">
-          {getHeightOptions().map((height) => (
+          {heightOptions.map((height) => (
             <option key={height} value={height}>
               {height}
             </option>

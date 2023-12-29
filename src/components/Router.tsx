@@ -1,11 +1,18 @@
 import { Route, Routes } from "react-router-dom"
 import { Formik, Form } from "formik"
 
+import { useFormInitialValues } from "../hooks/useFormInitialValues"
+
 import { FormRoot } from "./FormRoot"
 import { Order } from "./Order"
-import { initialValues } from "../formInitialValues"
 
 export const Router = () => {
+  const { initialValues, isLoading } = useFormInitialValues()
+
+  if (isLoading) {
+    return null
+  }
+
   return (
     <Formik
       initialValues={initialValues}

@@ -1,14 +1,11 @@
+import { ChangeEvent } from "react"
 import { Field } from "formik"
 import { VStack, IconButton, Select, HStack, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
-import {
-  calculatePrice,
-  getCollectionStandsSize,
-  getWidthOptions,
-  variantsBack,
-} from "../utils"
+import { useFormOptions } from "../hooks/useFormOptions"
+import { calculatePrice, getCollectionStandsSize } from "../utils"
 import {
   FormSubCollectionType,
   FormStandType,
@@ -19,7 +16,6 @@ import {
 import { GridItem } from "./GridItem"
 import { NumberInput } from "./NumberInput"
 import { FormShelves } from "./FormShelves"
-import { ChangeEvent } from "react"
 
 interface Props {
   collection: FormCollectionType
@@ -46,6 +42,8 @@ export const FormStand = ({
   subCollection,
   subCollectionIndex,
 }: Props) => {
+  const { backOptions, widthOptions } = useFormOptions()
+
   return (
     <>
       <GridItem
@@ -76,7 +74,7 @@ export const FormStand = ({
                 isDisabled: subCollectionIndex > 0,
               })}
             >
-              {getWidthOptions().map((width) => (
+              {widthOptions.map((width) => (
                 <option key={width} value={width}>
                   {width}
                 </option>
@@ -149,7 +147,7 @@ export const FormStand = ({
             isDisabled: subCollectionIndex > 0,
           })}
         >
-          {variantsBack.map(({ value, name }) => {
+          {backOptions.map(({ value, name }) => {
             if (collection.variant !== "P" && value === "2") {
               return null
             }

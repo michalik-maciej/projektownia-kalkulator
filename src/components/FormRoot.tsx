@@ -1,16 +1,24 @@
 import { Button, Grid, Text } from "@chakra-ui/react"
 import { FieldArray } from "formik"
 
-import { GridItem } from "./GridItem"
-import { initialValues } from "../formInitialValues"
+import { useFormInitialValues } from "../hooks/useFormInitialValues"
 import { FormCollectionType } from "../types"
-import { FormCollection } from "./FormCollection"
 import { calculatePrice } from "../utils"
+
+import { GridItem } from "./GridItem"
+import { FormCollection } from "./FormCollection"
 
 type Props = {
   collections: FormCollectionType[]
 }
+
 export const FormRoot = ({ collections }: Props) => {
+  const { initialValues, isLoading } = useFormInitialValues()
+
+  if (isLoading) {
+    return null
+  }
+
   return (
     <FieldArray name="collections">
       {({ remove: removeCollection, insert: insertCollection }) => (

@@ -1,32 +1,15 @@
 import { ChangeEvent } from "react"
-import { variantsCollection } from "./utils"
 
-interface Price {
-  price: number
-}
+type Item = { d: string; h: string; w: string; price: number }
+export type CollectionOption = "P" | "G" | "I"
 
-export type Back = Price & {
-  h: number
-  w: number
-}
-
-export type Foot = Price & {
-  d: number
-}
-
-export type Leg = Price & {
-  d: number
-  h: number
-  w: number
-}
-
-export type Shelf = Price & {
-  d: number
-  w: number
-}
-
-export type Support = Price & {
-  d: number
+export type Products = {
+  backs: Pick<Item, "h" | "w">[]
+  baseCovers: Pick<Item, "w">[]
+  feet: Pick<Item, "d">[]
+  legs: Item[]
+  shelves: Pick<Item, "d" | "w">[]
+  supports: Pick<Item, "d">[]
 }
 
 export type FormShelfType = {
@@ -52,7 +35,7 @@ export type FormCollectionType = {
   isCollapsed?: boolean
   // flag to edit both sub collections at once or separately
   isEditLocked?: boolean
-  variant: (typeof variantsCollection)[number]
+  variant: CollectionOption
   numberOfCollections: number
   subCollections: FormSubCollectionType[]
 }

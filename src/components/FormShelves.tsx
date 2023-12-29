@@ -3,9 +3,10 @@ import { Field, FieldArray } from "formik"
 import { Flex, VStack, IconButton, Select, Tooltip } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 
-import { NumberInput } from "./NumberInput"
-import { getShelfOptions } from "../utils"
+import { useFormOptions } from "../hooks/useFormOptions"
 import { FormCollectionType, FormShelfType, HandleLockedChange } from "../types"
+
+import { NumberInput } from "./NumberInput"
 
 interface Props {
   collection: FormCollectionType
@@ -28,6 +29,8 @@ export const FormShelves = ({
   subCollectionIndex,
   width,
 }: Props) => {
+  const { shelfOptions } = useFormOptions()
+
   return (
     <FieldArray name={`${fieldName}`}>
       {({ push: pushShelf, remove: removeShelf }) => (
@@ -55,7 +58,7 @@ export const FormShelves = ({
                   isDisabled: subCollectionIndex > 0,
                 })}
               >
-                {getShelfOptions(width).map((depth) => (
+                {shelfOptions(width).map((depth) => (
                   <option key={depth} value={depth}>
                     {depth}
                   </option>
