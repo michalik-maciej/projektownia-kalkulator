@@ -4,12 +4,12 @@ type Item = { d: string; h: string; w: string; price: number }
 export type CollectionOption = "P" | "G" | "I"
 
 export type Products = {
-  backs: Pick<Item, "h" | "w">[]
-  baseCovers: Pick<Item, "w">[]
-  feet: Pick<Item, "d">[]
+  backs: Omit<Item, "d">[]
+  baseCovers: Omit<Item, "d" | "h">[]
+  feet: Omit<Item, "h" | "w">[]
   legs: Item[]
-  shelves: Pick<Item, "d" | "w">[]
-  supports: Pick<Item, "d">[]
+  shelves: Omit<Item, "h">[]
+  supports: Omit<Item, "h" | "w">[]
 }
 
 export type FormShelfType = {

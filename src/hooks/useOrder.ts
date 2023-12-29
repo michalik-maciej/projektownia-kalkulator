@@ -9,11 +9,15 @@ import {
   orderShelves,
   orderSupports,
 } from "../utils"
+import { useProductsList } from "../queries/useProductsList"
 
 export const useOrder = () => {
   const {
     values: { collections },
   } = useFormikContext<{ collections: FormCollectionType[] }>()
+  const { data: products } = useProductsList()
+
+  if (!products) return null
 
   const order = [
     orderBacks,
@@ -22,7 +26,7 @@ export const useOrder = () => {
     orderLegs,
     orderShelves,
     orderSupports,
-  ].map((fn) => fn(collections))
+  ].map((func) => func(collections, products))
 
   return order
 }

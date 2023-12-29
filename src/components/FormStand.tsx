@@ -5,7 +5,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
 import { useFormOptions } from "../hooks/useFormOptions"
-import { calculatePrice, getCollectionStandsSize } from "../utils"
+import { getCollectionStandsSize } from "../utils"
 import {
   FormSubCollectionType,
   FormStandType,
@@ -16,6 +16,7 @@ import {
 import { GridItem } from "./GridItem"
 import { NumberInput } from "./NumberInput"
 import { FormShelves } from "./FormShelves"
+import { useCalculatePrice } from "../hooks/useCalculatePrice"
 
 interface Props {
   collection: FormCollectionType
@@ -43,6 +44,7 @@ export const FormStand = ({
   subCollectionIndex,
 }: Props) => {
   const { backOptions, widthOptions } = useFormOptions()
+  const collectionPrice = useCalculatePrice([collection])
 
   return (
     <>
@@ -166,7 +168,7 @@ export const FormStand = ({
           rowSpan={getCollectionStandsSize(collection)}
           colStart={8}
         >
-          <div>{calculatePrice([collection])}</div>
+          <div>{collectionPrice}</div>
         </GridItem>
       )}
     </>

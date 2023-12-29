@@ -11,7 +11,7 @@ type Props = {
 export const Order = ({ collections }: Props) => {
   const order = useOrder()
 
-  if (!size(collections)) return <div>Brak ciągów</div>
+  if (!size(collections) || !order) return <div>Brak ciągów</div>
 
   const renderSection = ({ productCategory, orderDetails }: OrderType) => (
     <>

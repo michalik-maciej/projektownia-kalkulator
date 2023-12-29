@@ -3,10 +3,10 @@ import { FieldArray } from "formik"
 
 import { useFormInitialValues } from "../hooks/useFormInitialValues"
 import { FormCollectionType } from "../types"
-import { calculatePrice } from "../utils"
 
 import { GridItem } from "./GridItem"
 import { FormCollection } from "./FormCollection"
+import { useCalculatePrice } from "../hooks/useCalculatePrice"
 
 type Props = {
   collections: FormCollectionType[]
@@ -14,6 +14,7 @@ type Props = {
 
 export const FormRoot = ({ collections }: Props) => {
   const { initialValues, isLoading } = useFormInitialValues()
+  const totalPrice = useCalculatePrice(collections)
 
   if (isLoading) {
     return null
@@ -44,7 +45,7 @@ export const FormRoot = ({ collections }: Props) => {
               Cena (zł)
             </GridItem>
             <GridItem colStart={8}>
-              <Text fontWeight="bold">{calculatePrice(collections)}</Text>
+              <Text fontWeight="bold">{totalPrice}</Text>
             </GridItem>
             {collections.map((collection, collectionIndex) => (
               <FormCollection

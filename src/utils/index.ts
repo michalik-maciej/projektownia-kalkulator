@@ -1,4 +1,3 @@
-export * from "./calculatePrice"
 export * from "./getCollectionStandsSize"
 export * from "./getProducts"
 export * from "./order/orderBacks"
