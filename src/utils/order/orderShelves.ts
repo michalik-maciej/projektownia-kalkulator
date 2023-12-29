@@ -1,14 +1,17 @@
 import { groupBy, map, sumBy, isEqual } from "lodash/fp"
 
-import { shelves as products } from "../../products"
 import {
   FormCollectionType,
   FormStandType,
   FormSubCollectionType,
+  Products,
 } from "../../types"
 import { aggregateOrder } from "./aggregateOrder"
 
-export const orderShelves = (data: FormCollectionType[]) => {
+export const orderShelves = (
+  data: FormCollectionType[],
+  products: Products
+) => {
   const aggregateByShelves = ({
     depth,
     shelves,
@@ -32,7 +35,7 @@ export const orderShelves = (data: FormCollectionType[]) => {
     const groupShelves = groupBy("depth", joinShelves)
 
     const sumShelves = map((group) => {
-      const [shelf] = products.filter(
+      const [shelf] = products.shelves.filter(
         ({ d, w }) => isEqual(d, group[0].depth) && isEqual(w, width)
       )
       const number = sumBy("numberOfShelves", group)

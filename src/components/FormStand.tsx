@@ -5,7 +5,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons"
 import { size } from "lodash/fp"
 
 import { useFormOptions } from "../hooks/useFormOptions"
-import { getCollectionStandsSize } from "../utils"
+import { getCollectionStandsSize } from "../utils/getCollectionStandsSize"
 import {
   FormSubCollectionType,
   FormStandType,

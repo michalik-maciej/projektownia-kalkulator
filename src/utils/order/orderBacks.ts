@@ -1,10 +1,9 @@
-import { orderBy, toNumber, toInteger } from "lodash/fp"
+import { orderBy, toNumber, toInteger, filter } from "lodash/fp"
 
-import { FormCollectionType, FormStandType } from "../../types"
-import { getBacks } from "../getProducts"
+import { FormCollectionType, FormStandType, Products } from "../../types"
 import { aggregateOrder } from "./aggregateOrder"
 
-export const orderBacks = (data: FormCollectionType[]) => {
+export const orderBacks = (data: FormCollectionType[], { backs }: Products) => {
   const aggregateByBacks = ({
     backVariant,
     height,
@@ -15,13 +14,14 @@ export const orderBacks = (data: FormCollectionType[]) => {
       return []
     }
 
-    const backs = orderBy(["h"], ["desc"], getBacks({ width }))
+    const filteredBacks = filter(({ w }) => (width ? w === width : true), backs)
+    const sortedBacks = orderBy(["h"], ["desc"], filteredBacks)
     const order = []
 
     const BACK_OFFSET = 10
     let remainder = toNumber(height) - BACK_OFFSET
 
-    for (const back of backs) {
+    for (const back of sortedBacks) {
       if (remainder >= toNumber(back.h)) {
         const number =
           Math.floor(remainder / toNumber(back.h)) *

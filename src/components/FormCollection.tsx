@@ -7,7 +7,7 @@ import { Gondola } from "../icons/Gondola"
 import { Impuls } from "../icons/Impuls"
 import { Przyscienny } from "../icons/Przyscienny"
 import { useFormOptions } from "../hooks/useFormOptions"
-import { getCollectionStandsSize } from "../utils"
+import { getCollectionStandsSize } from "../utils/getCollectionStandsSize"
 import { FormCollectionType } from "../types"
 
 import { GridItem } from "./GridItem"

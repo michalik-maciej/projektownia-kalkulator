@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import { size } from "lodash/fp"
 import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
 
@@ -13,8 +14,11 @@ export const Order = ({ collections }: Props) => {
 
   if (!size(collections) || !order) return <div>Brak ciągów</div>
 
-  const renderSection = ({ productCategory, orderDetails }: OrderType) => (
-    <>
+  const renderSection = (
+    { productCategory, orderDetails }: OrderType,
+    index: number
+  ) => (
+    <Fragment key={index}>
       <Tr>
         <Td pl={2} colSpan={2} fontWeight={600}>
           {productCategory}
@@ -26,7 +30,7 @@ export const Order = ({ collections }: Props) => {
           <Td>{number}</Td>
         </Tr>
       ))}
-    </>
+    </Fragment>
   )
 
   return (
@@ -38,8 +42,8 @@ export const Order = ({ collections }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        {order.map((category) =>
-          size(category.orderDetails) ? renderSection(category) : null
+        {order.map((category, index) =>
+          size(category.orderDetails) ? renderSection(category, index) : null
         )}
       </Tbody>
     </Table>

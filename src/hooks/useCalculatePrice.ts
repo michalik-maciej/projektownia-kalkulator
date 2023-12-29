@@ -8,7 +8,7 @@ import {
   orderLegs,
   orderShelves,
   orderSupports,
-} from "../utils"
+} from "../utils/order"
 
 export const useCalculatePrice = (collections: FormCollectionType[]) => {
   const { data: products } = useProductsList()

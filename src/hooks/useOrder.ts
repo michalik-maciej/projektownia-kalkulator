@@ -8,7 +8,7 @@ import {
   orderLegs,
   orderShelves,
   orderSupports,
-} from "../utils"
+} from "../utils/order"
 import { useProductsList } from "../queries/useProductsList"
 
 export const useOrder = () => {

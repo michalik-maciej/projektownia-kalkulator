@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react"
+import { ChangeEvent, Fragment } from "react"
 import { has } from "lodash/fp"
 import { Field, FieldArray, useFormikContext, FieldProps } from "formik"
 import { Box, Checkbox, Select } from "@chakra-ui/react"
@@ -51,7 +51,7 @@ export const FormSubCollection = ({
   }
 
   return (
-    <>
+    <Fragment key={subCollectionIndex}>
       <GridItem
         collectionIndex={collectionIndex}
         rowSpan={subCollection.stands.length}
@@ -135,6 +135,6 @@ export const FormSubCollection = ({
           </>
         )}
       </FieldArray>
-    </>
+    </Fragment>
   )
 }

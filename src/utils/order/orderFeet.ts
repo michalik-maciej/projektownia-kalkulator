@@ -1,14 +1,14 @@
 import { filter, sumBy } from "lodash/fp"
 
-import { feet } from "../../products"
 import {
   FormCollectionType,
   FormStandType,
   FormSubCollectionType,
+  Products,
 } from "../../types"
 import { aggregateOrder } from "./aggregateOrder"
 
-export const orderFeet = (data: FormCollectionType[]) => {
+export const orderFeet = (data: FormCollectionType[], { feet }: Products) => {
   const aggregateByFeet = ({
     depth,
     stands,
