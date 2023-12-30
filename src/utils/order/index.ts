@@ -1,6 +1,6 @@
 export * from "./orderBacks"
 export * from "./orderBaseCovers"
 export * from "./orderFeet"
-export * from "./orderLegs"
+export * from "./orderProfiles"
 export * from "./orderShelves"
 export * from "./orderSupports"

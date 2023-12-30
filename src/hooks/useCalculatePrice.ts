@@ -5,7 +5,7 @@ import {
   orderBacks,
   orderBaseCovers,
   orderFeet,
-  orderLegs,
+  orderProfiles,
   orderShelves,
   orderSupports,
 } from "../utils/order"
@@ -19,7 +19,7 @@ export const useCalculatePrice = (collections: FormCollectionType[]) => {
     orderBacks,
     orderBaseCovers,
     orderFeet,
-    orderLegs,
+    orderProfiles,
     orderShelves,
     orderSupports,
   ]

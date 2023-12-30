@@ -21,7 +21,7 @@ export const orderBaseCovers = (
       return []
     }
 
-    const cover = find(({ w }) => w === width, baseCovers)
+    const cover = find(({ w }) => w === width, baseCovers.items)
 
     if (!cover) {
       return []
@@ -37,7 +37,7 @@ export const orderBaseCovers = (
   }
 
   return {
-    productCategory: "Osłony",
+    label: baseCovers.label,
     orderDetails: aggregateOrder(data, aggregateByBaseCovers),
   }
 }

@@ -1,16 +1,29 @@
 import { ChangeEvent } from "react"
 
-type Item = { d: string; h: string; w: string; price: number }
-export type CollectionOption = "P" | "G" | "I"
+export type ProductItem = {
+  category?: string
+  price: number
+  d: string
+  h: string
+  w: string
+}
+
+export type ProductCategory<T> = {
+  label: string
+  items: T[]
+}
 
 export type Products = {
-  backs: Omit<Item, "d">[]
-  baseCovers: Omit<Item, "d" | "h">[]
-  feet: Omit<Item, "h" | "w">[]
-  legs: Item[]
-  shelves: Omit<Item, "h">[]
-  supports: Omit<Item, "h" | "w">[]
+  backs: ProductCategory<Omit<ProductItem, "d">>
+  baseCovers: ProductCategory<Omit<ProductItem, "d" | "h">>
+  feet: ProductCategory<Omit<ProductItem, "h" | "w">>
+  profiles: ProductCategory<ProductItem>
+  shelves: ProductCategory<Omit<ProductItem, "h">>
+  supports: ProductCategory<Omit<ProductItem, "h" | "w">>
+  other: ProductCategory<Partial<ProductItem>>
 }
+
+export type CollectionOption = "P" | "G" | "I"
 
 export type FormShelfType = {
   depth: string
@@ -41,7 +54,7 @@ export type FormCollectionType = {
 }
 
 export type OrderType = {
-  productCategory: string
+  label: string
   orderDetails: {
     description: string
     number: number
@@ -51,5 +64,5 @@ export type OrderType = {
 
 export type HandleLockedChange = (
   event: ChangeEvent<HTMLInputElement>,
-  fieldName: string
+  fieldlabel: string
 ) => void

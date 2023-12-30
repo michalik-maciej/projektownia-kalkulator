@@ -4,6 +4,7 @@ import { Formik, Form } from "formik"
 import { useFormInitialValues } from "../hooks/useFormInitialValues"
 
 import { FormRoot } from "./FormRoot"
+import { FormProducts } from "./FormProducts"
 import { Order } from "./Order"
 
 export const Router = () => {
@@ -14,22 +15,21 @@ export const Router = () => {
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values) => console.log(values)}
-    >
-      {({ values: { collections } }) => (
+    <>
+      <Routes>
+        <Route path="/catalog" element={<FormProducts />} />
+      </Routes>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => console.log(values)}
+      >
         <Form>
           <Routes>
-            <Route
-              path="/order"
-              element={<Order collections={collections} />}
-            />
-            <Route path="/catalog" element={<div>Katalog elementów</div>} />
-            <Route path="/*" element={<FormRoot collections={collections} />} />
+            <Route path="/order" element={<Order />} />
+            <Route path="/form" element={<FormRoot />} />
           </Routes>
         </Form>
-      )}
-    </Formik>
+      </Formik>
+    </>
   )
 }

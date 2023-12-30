@@ -13,7 +13,7 @@ export const orderFeet = (data: FormCollectionType[], { feet }: Products) => {
     depth,
     stands,
   }: FormSubCollectionType & FormStandType) => {
-    const { price: unitPrice } = filter(({ d }) => d === depth, feet)[0]
+    const { price: unitPrice } = filter(({ d }) => d === depth, feet.items)[0]
     const number = sumBy("numberOfStands", stands) + 1
 
     return [
@@ -26,7 +26,7 @@ export const orderFeet = (data: FormCollectionType[], { feet }: Products) => {
   }
 
   return {
-    productCategory: "Stopy",
+    label: feet.label,
     orderDetails: aggregateOrder(data, aggregateByFeet),
   }
 }

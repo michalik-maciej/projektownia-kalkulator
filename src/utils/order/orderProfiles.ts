@@ -8,26 +8,29 @@ import {
 } from "../../types"
 import { aggregateOrder } from "./aggregateOrder"
 
-export const orderLegs = (data: FormCollectionType[], { legs }: Products) => {
-  const aggregateByLegs = ({
+export const orderProfiles = (
+  data: FormCollectionType[],
+  { profiles }: Products
+) => {
+  const aggregateByProfiles = ({
     height,
     variant,
     stands,
   }: FormCollectionType & FormSubCollectionType & FormStandType) => {
-    const leg = filter(({ h }) => h === height, legs)[0]
+    const profile = filter(({ h }) => h === height, profiles.items)[0]
     const number = sumBy("numberOfStands", stands) + 1
 
     return [
       {
-        description: `${leg?.h} / ${leg?.w} / ${leg?.d}`,
-        // share legs in gondola and impulse collections between sides
+        description: `${profile?.h} / ${profile?.w} / ${profile?.d}`,
+        // share profiles in gondola and impulse collections between sides
         number: variant === "P" ? number : Math.ceil(0.5 * number),
-        price: number * leg.price,
+        price: number * profile.price,
       },
     ]
   }
   return {
-    productCategory: "Profile",
-    orderDetails: aggregateOrder(data, aggregateByLegs),
+    label: profiles.label,
+    orderDetails: aggregateOrder(data, aggregateByProfiles),
   }
 }

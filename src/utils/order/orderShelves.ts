@@ -35,7 +35,7 @@ export const orderShelves = (
     const groupShelves = groupBy("depth", joinShelves)
 
     const sumShelves = map((group) => {
-      const [shelf] = products.shelves.filter(
+      const [shelf] = products.shelves.items.filter(
         ({ d, w }) => isEqual(d, group[0].depth) && isEqual(w, width)
       )
       const number = sumBy("numberOfShelves", group)
@@ -51,7 +51,7 @@ export const orderShelves = (
   }
 
   return {
-    productCategory: "Półki",
+    label: products.shelves.label,
     orderDetails: aggregateOrder(data, aggregateByShelves),
   }
 }

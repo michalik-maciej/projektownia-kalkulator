@@ -17,6 +17,11 @@ interface Props {
 export const PageWrapper = ({ children }: Props) => {
   const { toggleColorMode } = useColorMode()
 
+  const buttonProps = {
+    as: Link,
+    borderRadius: "full",
+  }
+
   return (
     <Box pt="20" minH="100vh">
       <Flex
@@ -32,13 +37,13 @@ export const PageWrapper = ({ children }: Props) => {
         zIndex={1}
       >
         <HStack spacing="8">
-          <Button as={Link} to="/form">
+          <Button {...buttonProps} to="/form">
             Formularz
           </Button>
-          <Button as={Link} to="/order">
+          <Button {...buttonProps} to="/order">
             Rozpiska
           </Button>
-          <Button as={Link} to="/catalog">
+          <Button {...buttonProps} to="/catalog">
             Katalog
           </Button>
         </HStack>

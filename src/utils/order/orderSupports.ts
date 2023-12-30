@@ -12,7 +12,7 @@ export const orderSupports = (
 
     const sumSupports = map((group) => {
       const number = 2 * sumBy("numberOfShelves", group) * numberOfStands
-      const support = find(({ d }) => d === group[0].depth, supports)
+      const support = find(({ d }) => d === group[0].depth, supports.items)
       const unitPrice = support ? support.price : 0
 
       return {
@@ -26,7 +26,7 @@ export const orderSupports = (
   }
 
   return {
-    productCategory: "Wsporniki",
+    label: supports.label,
     orderDetails: aggregateOrder(data, aggregateBySupports),
   }
 }

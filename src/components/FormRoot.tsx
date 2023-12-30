@@ -1,5 +1,5 @@
-import { Button, Grid, Text } from "@chakra-ui/react"
-import { FieldArray } from "formik"
+import { AbsoluteCenter, Spinner, Button, Grid, Text } from "@chakra-ui/react"
+import { FieldArray, useFormikContext } from "formik"
 
 import { useFormInitialValues } from "../hooks/useFormInitialValues"
 import { FormCollectionType } from "../types"
@@ -8,16 +8,19 @@ import { GridItem } from "./GridItem"
 import { FormCollection } from "./FormCollection"
 import { useCalculatePrice } from "../hooks/useCalculatePrice"
 
-type Props = {
-  collections: FormCollectionType[]
-}
-
-export const FormRoot = ({ collections }: Props) => {
+export const FormRoot = () => {
   const { initialValues, isLoading } = useFormInitialValues()
+  const {
+    values: { collections },
+  } = useFormikContext<{ collections: FormCollectionType[] }>()
   const totalPrice = useCalculatePrice(collections)
 
   if (isLoading) {
-    return null
+    return (
+      <AbsoluteCenter>
+        <Spinner />
+      </AbsoluteCenter>
+    )
   }
 
   return (

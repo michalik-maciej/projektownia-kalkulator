@@ -12,13 +12,13 @@ export const useFormOptions = () => {
     { value: "2", name: "2" },
   ] as const
   const collectionOptions: CollectionOption[] = ["P", "G", "I"]
-  const heightOptions = map("h", products?.legs)
-  const footOptions = map("d", products?.feet)
-  const widthOptions = uniq(map("w", products?.shelves))
+  const heightOptions = map("h", products?.profiles.items)
+  const footOptions = map("d", products?.feet.items)
+  const widthOptions = uniq(map("w", products?.shelves.items))
   const shelfOptions = (width: string): string[] =>
     map(
       "d",
-      filter(({ w }) => w === width, products?.shelves)
+      filter(({ w }) => w === width, products?.shelves.items)
     )
 
   return {

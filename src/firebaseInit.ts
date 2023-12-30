@@ -1,4 +1,6 @@
+// import { getFirestore, setDoc, doc } from "firebase/firestore/lite"
 import { initializeApp } from "firebase/app"
+// import { products } from "./products/products"
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -11,6 +13,8 @@ const firebaseConfig = {
 
 const setup = () => {
   initializeApp(firebaseConfig)
+
+  // setDoc(doc(getFirestore(), "products", "catalog"), products)
 }
 
 export default setup

@@ -5,7 +5,7 @@ import {
   orderBacks,
   orderBaseCovers,
   orderFeet,
-  orderLegs,
+  orderProfiles,
   orderShelves,
   orderSupports,
 } from "../utils/order"
@@ -23,7 +23,7 @@ export const useOrder = () => {
     orderBacks,
     orderBaseCovers,
     orderFeet,
-    orderLegs,
+    orderProfiles,
     orderShelves,
     orderSupports,
   ].map((func) => func(collections, products))

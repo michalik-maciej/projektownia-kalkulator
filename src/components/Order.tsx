@@ -1,27 +1,24 @@
 import { Fragment } from "react"
+import { useFormikContext } from "formik"
 import { size } from "lodash/fp"
 import { Tr, Th, Td, Table, Tbody, Thead } from "@chakra-ui/react"
 
 import { useOrder } from "../hooks/useOrder"
 import { FormCollectionType, OrderType } from "../types"
 
-type Props = {
-  collections: FormCollectionType[]
-}
-
-export const Order = ({ collections }: Props) => {
+export const Order = () => {
   const order = useOrder()
+  const {
+    values: { collections },
+  } = useFormikContext<{ collections: FormCollectionType[] }>()
 
   if (!size(collections) || !order) return <div>Brak ciągów</div>
 
-  const renderSection = (
-    { productCategory, orderDetails }: OrderType,
-    index: number
-  ) => (
+  const renderSection = ({ label, orderDetails }: OrderType, index: number) => (
     <Fragment key={index}>
       <Tr>
         <Td pl={2} colSpan={2} fontWeight={600}>
-          {productCategory}
+          {label}
         </Td>
       </Tr>
       {orderDetails.map(({ description, number }, index) => (
